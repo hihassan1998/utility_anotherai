@@ -32,7 +32,7 @@ export default function ContactPage() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: "87c4b78a-c8cc-4d37-8898-17a4128f7422", // Public key routing to hassan1998dev@gmail.com
+          access_key: "8acf92f6-a0b8-403e-add0-a988dc36a32b", // User's generated Web3Forms key
           name,
           email,
           message,
