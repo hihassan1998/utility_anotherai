@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AnoTool
 
-## Getting Started
+**AnoTool** is a modern, light-speed, and privacy-focused online utility tools platform developed by [anotherAI](https://anotheraiplatform.com) for public use. 
 
-First, run the development server:
+Calculations, conversions, and inputs run 100% locally in the browser, ensuring full user privacy with no backend data collection.
 
+---
+
+## 🚀 Key Features
+
+*   **Age Calculator**: Get exact breakdowns of years, months, days, total days lived, day of the week, and live countdowns to birthdays with custom celebration elements.
+*   **BMI Calculator**: Compute Body Mass Index for adults using Metric or Imperial systems, featuring an interactive color gauge and target weight ranges.
+*   **Date Duration Calculator**: Compute duration between two calendar dates in years, months, weeks, days, hours, and minutes.
+*   **Percentage Calculator**: Instantly calculate equations, discount percentages, and value increase/decrease metrics.
+*   **Unit Converter**: Multi-category conversion supporting Length, Weight, Temperature, Area, Volume, Speed, and Time units.
+*   **Built-in SEO & FAQ Systems**: Implements JSON-LD breadcrumb and FAQ page schema tags on every route to trigger Google rich snippets automatically.
+*   **No-Marketing Growth Loops**: Easy share-to-clipboard buttons on results containers generating custom status text for referral loops.
+
+---
+
+## 🛠️ Technology Stack
+
+*   **Framework**: Next.js 15+ (App Router)
+*   **Language**: TypeScript
+*   **Styling**: Tailwind CSS & Vanilla CSS
+*   **UI Components**: shadcn/ui (Radix Primitives)
+*   **Theme Management**: `next-themes` (Dark/Light mode support)
+
+---
+
+## 📦 Getting Started & Installation
+
+Follow these steps to run AnoTool locally:
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <your-repository-url>
+cd utility_anotherai
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run the development server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser to inspect the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ⚙️ How to Add a New Tool
 
-To learn more about Next.js, take a look at the following resources:
+AnoTool is structured to let you deploy new tools in minutes:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Add Metadata**: Open [site.ts](file:///d:/AntigravityProjects/utility_anotherai/src/config/site.ts) and append a new tool object to the `tools` array defining the title, description, SEO keywords, target routing path, FAQs, and example cases.
+2.  **Create Client Logic**: Create a client page calculator component under `src/components/tools/` (e.g. `MyNewCalculatorClient.tsx`).
+3.  **Define Next.js Route**: Create a folder in `src/app/my-new-calculator/` and write a standard `page.tsx` that exports dynamic SEO metadata and renders your client layout wrapped by the core wrapper:
+    ```tsx
+    import { ToolLayout } from "@/components/tools/ToolLayout";
+    import { MyNewCalculatorClient } from "@/components/tools/MyNewCalculatorClient";
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    export default function Page() {
+      return (
+        <ToolLayout toolId="my-new-calculator">
+          <MyNewCalculatorClient />
+        </ToolLayout>
+      );
+    }
+    ```
