@@ -36,9 +36,13 @@ export function Navbar() {
         {/* Brand Logo */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white font-bold text-lg shadow-md shadow-emerald-500/20">
-              T
-            </span>
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600/10 p-1.5 shadow-md shadow-emerald-500/5">
+              <img
+                src="/favicon.png"
+                alt="AnoTool Brand Logo"
+                className="h-full w-full object-contain dark:invert-0"
+              />
+            </div>
             <span className="hidden sm:inline-block font-bold text-xl tracking-tight brand-gradient">
               {siteConfig.name}
             </span>
