@@ -16,7 +16,7 @@ Always prioritize:
 
 General Rules
 
-- Explain important architectural decisions before implementing them.
+- Explain important architectural decisions before implementing them as a plan.
 - Avoid duplicated code.
 - Use Server Components where appropriate.
 - Prefer static rendering whenever possible.

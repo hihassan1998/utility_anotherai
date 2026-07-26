@@ -12,15 +12,9 @@ The architecture must be scalable so new tools can be added in minutes without c
 
 # Project Name
 
-Choose a simple brandable name.
+A simple brandable name: anoTool
 
-Examples:
 
-- UtilityNest
-- ToolHub
-- ToolDock
-- QuickUtilities
-- UtilityForge
 
 Use placeholder branding so the domain can be connected later.
 
