@@ -15,9 +15,41 @@ interface LineItem {
   vatRate: number; // 25, 12, 6, 0
 }
 
+const CURRENCIES = [
+  { code: "SEK", name: "SEK - Swedish Krona" },
+  { code: "USD", name: "USD - US Dollar" },
+  { code: "EUR", name: "EUR - Euro" },
+  { code: "GBP", name: "GBP - British Pound" },
+  { code: "CAD", name: "CAD - Canadian Dollar" },
+  { code: "AUD", name: "AUD - Australian Dollar" },
+  { code: "JPY", name: "JPY - Japanese Yen" },
+  { code: "CHF", name: "CHF - Swiss Franc" },
+  { code: "DKK", name: "DKK - Danish Krone" },
+  { code: "NOK", name: "NOK - Norwegian Krone" },
+  { code: "PLN", name: "PLN - Polish Zloty" },
+  { code: "INR", name: "INR - Indian Rupee" },
+  { code: "CNY", name: "CNY - Chinese Yuan" },
+  { code: "NZD", name: "NZD - New Zealand Dollar" },
+  { code: "MXN", name: "MXN - Mexican Peso" },
+  { code: "SGD", name: "SGD - Singapore Dollar" },
+  { code: "HKD", name: "HKD - Hong Kong Dollar" },
+  { code: "BRL", name: "BRL - Brazilian Real" },
+  { code: "ZAR", name: "ZAR - South African Rand" },
+  { code: "TRY", name: "TRY - Turkish Lira" },
+  { code: "AED", name: "AED - UAE Dirham" },
+  { code: "ILS", name: "ILS - Israeli Shekel" },
+  { code: "KRW", name: "KRW - South Korean Won" },
+  { code: "SAR", name: "SAR - Saudi Riyal" },
+  { code: "QAR", name: "QAR - Qatari Riyal" },
+  { code: "RUB", name: "RUB - Russian Ruble" },
+  { code: "THB", name: "THB - Thai Baht" },
+];
+
+
 export function InvoiceCreatorClient() {
   // State for tabs on mobile
   const [activeTab, setActiveTab] = React.useState("edit");
+  const [layoutMode, setLayoutMode] = React.useState<"split" | "tabs">("split");
 
   // Logo Upload
   const [logo, setLogo] = React.useState<string | null>(null);
@@ -329,6 +361,7 @@ export function InvoiceCreatorClient() {
       setBic("ANDEESSX");
       setLateInterest("8");
       setFooterNote("Thank you for your business! / Tack för förtroendet!");
+      setLayoutMode("split");
     }
   };
 
@@ -355,8 +388,37 @@ export function InvoiceCreatorClient() {
           </Button>
         </div>
 
-        {/* Toggles on mobile */}
-        <div className="lg:hidden">
+          {/* Desktop Layout Switcher */}
+          <div className="hidden lg:flex items-center gap-2 border-l border-border pl-3">
+            <span className="text-xs text-muted-foreground font-semibold">Workspace View:</span>
+            <div className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground border border-border">
+              <Button
+                variant={layoutMode === "split" ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setLayoutMode("split")}
+                className="text-xs h-7 px-3 rounded-md"
+              >
+                <Icon name="Columns" size={13} className="mr-1" />
+                Side-by-Side
+              </Button>
+              <Button
+                variant={layoutMode === "tabs" ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => {
+                  setLayoutMode("tabs");
+                  setActiveTab("edit");
+                }}
+                className="text-xs h-7 px-3 rounded-md"
+              >
+                <Icon name="Layers" size={13} className="mr-1" />
+                Single Column Switcher
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Switcher Toggles: visible on mobile, and on desktop if layoutMode is tabs */}
+        <div className={layoutMode === "tabs" ? "block" : "lg:hidden"}>
           <div className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground border border-border">
             <Button
               variant={activeTab === "edit" ? "secondary" : "ghost"}
@@ -376,12 +438,17 @@ export function InvoiceCreatorClient() {
             </Button>
           </div>
         </div>
-      </div>
 
       {/* Main Grid Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Side: Invoice Editor Forms */}
-        <div className={`lg:col-span-6 space-y-6 no-print ${activeTab === "edit" ? "block" : "hidden lg:block"}`}>
+        <div
+          className={`${
+            layoutMode === "tabs" ? "lg:col-span-12" : "lg:col-span-6"
+          } space-y-6 no-print ${
+            activeTab === "edit" ? "block" : (layoutMode === "tabs" ? "hidden" : "hidden lg:block")
+          }`}
+        >
           
           {/* Logo & Seller Info */}
           <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
@@ -549,10 +616,11 @@ export function InvoiceCreatorClient() {
                   onChange={(e) => setCurrency(e.target.value)}
                   className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-muted/20 px-3 py-1.5 text-xs focus-visible:ring-emerald-500"
                 >
-                  <option value="SEK">SEK (kr)</option>
-                  <option value="USD">USD ($)</option>
-                  <option value="EUR">EUR (€)</option>
-                  <option value="GBP">GBP (£)</option>
+                  {CURRENCIES.map((cur) => (
+                    <option key={cur.code} value={cur.code}>
+                      {cur.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -770,7 +838,13 @@ export function InvoiceCreatorClient() {
         </div>
 
         {/* Right Side: Professional Invoice Preview (Printable area) */}
-        <div className={`lg:col-span-6 ${activeTab === "preview" ? "block" : "hidden lg:block"}`}>
+        <div
+          className={`${
+            layoutMode === "tabs" ? "lg:col-span-12" : "lg:col-span-6"
+          } ${
+            activeTab === "preview" ? "block" : (layoutMode === "tabs" ? "hidden" : "hidden lg:block")
+          }`}
+        >
           <div className="sticky top-20">
             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5 no-print">
               <Icon name="Eye" size={14} className="text-emerald-500" />
