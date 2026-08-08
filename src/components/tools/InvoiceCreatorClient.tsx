@@ -136,7 +136,157 @@ export function InvoiceCreatorClient() {
   }, [lineItems]);
 
   const handlePrint = () => {
-    window.print();
+    const printContent = document.getElementById("invoice-printable-container");
+    if (!printContent) return;
+
+    // Create a temporary hidden iframe
+    const iframe = document.createElement("iframe");
+    iframe.style.position = "fixed";
+    iframe.style.right = "0";
+    iframe.style.bottom = "0";
+    iframe.style.width = "0";
+    iframe.style.height = "0";
+    iframe.style.border = "0";
+    document.body.appendChild(iframe);
+
+    const doc = iframe.contentWindow?.document || iframe.contentDocument;
+    if (!doc) return;
+
+    // Write pristine HTML content with targeted invoice styling
+    doc.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Invoice - ${invoiceNumber}</title>
+          <style>
+            @page {
+              size: A4;
+              margin: 15mm;
+            }
+            body {
+              font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-size: 11px;
+              line-height: 1.5;
+              color: #1e293b;
+              margin: 0;
+              padding: 0;
+              background: #fff;
+            }
+            
+            /* Text & Colors */
+            .text-slate-800 { color: #1e293b; }
+            .text-slate-900 { color: #0f172a; }
+            .text-slate-700 { color: #334155; }
+            .text-slate-600 { color: #475569; }
+            .text-slate-500 { color: #64748b; }
+            .text-slate-400 { color: #94a3b8; }
+            .text-emerald-600 { color: #059669; }
+            .text-emerald-700 { color: #047857; }
+            .bg-slate-50 { background-color: #f8fafc; }
+            .bg-emerald-50 { background-color: #ecfdf5; }
+            .border-slate-50 { border-color: #f8fafc; }
+            .border-slate-100 { border-color: #f1f5f9; }
+            .border-slate-200 { border-color: #e2e8f0; }
+            .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+            .border-b-2 { border-bottom-width: 2px; border-bottom-style: solid; }
+            .border-t { border-top-width: 1px; border-top-style: solid; }
+            .border { border-width: 1px; border-style: solid; }
+            .rounded-lg { border-radius: 0.5rem; }
+            .rounded { border-radius: 0.25rem; }
+            
+            /* Layout Structure */
+            .space-y-8 > * + * { margin-top: 1.8rem; }
+            .space-y-4 > * + * { margin-top: 0.8rem; }
+            .space-y-2 > * + * { margin-top: 0.4rem; }
+            .space-y-1 > * + * { margin-top: 0.2rem; }
+            .mt-8 { margin-top: 1.8rem; }
+            .mt-3 { margin-top: 0.6rem; }
+            .mt-1 { margin-top: 0.2rem; }
+            .mb-3 { margin-bottom: 0.6rem; }
+            .mb-1 { margin-bottom: 0.2rem; }
+            .pb-6 { padding-bottom: 1.2rem; }
+            .pb-2 { padding-bottom: 0.4rem; }
+            .pt-6 { padding-top: 1.2rem; }
+            .pt-4 { padding-top: 0.8rem; }
+            .pt-3 { padding-top: 0.6rem; }
+            .pt-1 { padding-top: 0.2rem; }
+            .p-4 { padding: 1rem; }
+            .px-1.5 { padding-left: 0.375rem; padding-right: 0.375rem; }
+            .py-0.5 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+            
+            /* Print Display Types */
+            .flex { display: flex; }
+            .justify-between { justify-content: space-between; }
+            .justify-end { justify-content: flex-end; }
+            .items-start { align-items: flex-start; }
+            .items-center { align-items: center; }
+            .flex-col { flex-direction: column; }
+            .grid { display: grid; }
+            .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .gap-4 { gap: 1rem; }
+            
+            /* Typography Sizing */
+            .font-bold { font-weight: 700; }
+            .font-semibold { font-weight: 600; }
+            .font-extrabold { font-weight: 800; }
+            .font-medium { font-weight: 500; }
+            .font-normal { font-weight: 400; }
+            .text-base { font-size: 11px; }
+            .text-sm { font-size: 11px; }
+            .text-xs { font-size: 10px; }
+            .text-lg { font-size: 13px; }
+            .text-2xl { font-size: 16px; }
+            .text-\\[9px\\] { font-size: 9px; }
+            .text-\\[10px\\] { font-size: 10px; }
+            .text-\\[11px\\] { font-size: 11px; }
+            .uppercase { text-transform: uppercase; }
+            .tracking-tight { letter-spacing: -0.025em; }
+            .tracking-wider { letter-spacing: 0.05em; }
+            .text-right { text-align: right; }
+            .text-center { text-align: center; }
+            .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .whitespace-pre-line { white-space: pre-line; }
+            .inline-block { display: inline-block; }
+            
+            /* Table formatting */
+            table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+            th { border-bottom: 2px solid #cbd5e1; color: #64748b; font-size: 9px; text-transform: uppercase; font-weight: 700; padding: 8px 0; }
+            td { border-bottom: 1px solid #f1f5f9; padding: 8px 0; }
+            img { max-height: 48px; max-width: 180px; object-fit: contain; }
+            .w-full { width: 100%; }
+            .w-16 { width: 4rem; }
+            .w-24 { width: 6rem; }
+            .w-64 { width: 16rem; }
+          </style>
+        </head>
+        <body>
+          <div id="invoice-printable-container" class="space-y-8">
+            ${printContent.innerHTML}
+          </div>
+          <script>
+            window.addEventListener('load', () => {
+              setTimeout(() => {
+                window.print();
+              }, 300);
+            });
+          </script>
+        </body>
+      </html>
+    `);
+    doc.close();
+
+    // Clean up temporary iframe after dialog completes
+    const handleAfterPrint = () => {
+      if (document.body.contains(iframe)) {
+        document.body.removeChild(iframe);
+      }
+    };
+    
+    iframe.contentWindow?.addEventListener("afterprint", handleAfterPrint);
+    
+    // Safety fallback cleanup
+    setTimeout(handleAfterPrint, 60000);
   };
 
   const handleReset = () => {
@@ -172,32 +322,6 @@ export function InvoiceCreatorClient() {
 
   return (
     <div className="space-y-6">
-      {/* Hide page contents outside invoice on system print */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @media print {
-          body * {
-            visibility: hidden !important;
-          }
-          #invoice-printable-container, #invoice-printable-container * {
-            visibility: visible !important;
-          }
-          #invoice-printable-container {
-            position: absolute !important;
-            left: 0 !important;
-            top: 0 !important;
-            width: 100% !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            background: white !important;
-            color: black !important;
-            box-shadow: none !important;
-            border: none !important;
-          }
-          main, header, footer, nav, button, .no-print {
-            display: none !important;
-          }
-        }
-      ` }} />
 
       {/* Control Buttons Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 bg-muted/20 border border-border/40 rounded-xl p-4 no-print">
