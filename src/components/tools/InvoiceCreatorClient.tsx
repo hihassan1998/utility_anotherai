@@ -438,21 +438,11 @@ export function InvoiceCreatorClient() {
 
     let data = "";
     if (qrType === "swish") {
-      const swishPayload = {
-        version: 1,
-        payee: {
-          value: qrValue.replace(/\s+/g, ""),
-        },
-        amount: {
-          value: calculatedTotals.grandTotal,
-          editable: false,
-        },
-        message: {
-          value: invoiceNumber,
-          editable: false,
-        },
-      };
-      data = `swish://payment?data=${encodeURIComponent(JSON.stringify(swishPayload))}`;
+      const swishPayee = qrValue.replace(/[^0-9]/g, "");
+      const swishAmount = calculatedTotals.grandTotal.toFixed(2).replace(".", ",");
+      const swishMsg = encodeURIComponent(invoiceNumber);
+      // lock_mask = 0 locks both payee/amount editability for billing accuracy
+      data = `C${swishPayee};${swishAmount};${swishMsg};0`;
     } else if (qrType === "paypal") {
       data = `https://www.paypal.me/${qrValue}/${calculatedTotals.grandTotal}`;
     } else {
