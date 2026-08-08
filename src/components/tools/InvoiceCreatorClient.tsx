@@ -91,6 +91,8 @@ export function InvoiceCreatorClient() {
   const [bic, setBic] = React.useState("ANDEESSX");
   const [lateInterest, setLateInterest] = React.useState("8");
   const [footerNote, setFooterNote] = React.useState("Thank you for your business! / Tack för förtroendet!");
+  const [qrType, setQrType] = React.useState<"none" | "swish" | "paypal" | "url">("none");
+  const [qrValue, setQrValue] = React.useState("");
 
   // Handle Logo Upload
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,6 +169,27 @@ export function InvoiceCreatorClient() {
       grandTotal,
     };
   }, [lineItems]);
+
+  const qrCodeUrl = React.useMemo(() => {
+    if (qrType === "none" || !qrValue) return null;
+
+    let data = "";
+    if (qrType === "swish") {
+      // Swish JSON payment payload format
+      data = JSON.stringify({
+        version: 1,
+        payee: qrValue.replace(/\s+/g, ""),
+        amount: calculatedTotals.grandTotal,
+        message: invoiceNumber,
+      });
+    } else if (qrType === "paypal") {
+      data = `https://www.paypal.me/${qrValue}/${calculatedTotals.grandTotal}`;
+    } else {
+      data = qrValue;
+    }
+
+    return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(data)}`;
+  }, [qrType, qrValue, calculatedTotals.grandTotal, invoiceNumber]);
 
   const handlePrint = () => {
     const printContent = document.getElementById("invoice-printable-container");
@@ -362,6 +385,8 @@ export function InvoiceCreatorClient() {
       setLateInterest("8");
       setFooterNote("Thank you for your business! / Tack för förtroendet!");
       setLayoutMode("split");
+      setQrType("none");
+      setQrValue("");
     }
   };
 
@@ -823,6 +848,49 @@ export function InvoiceCreatorClient() {
                 className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
               />
             </div>
+            {/* Scan-to-Pay QR Code Configurations */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-border/40 pt-4 mt-2">
+              <div className="space-y-1.5">
+                <Label htmlFor="qr-type" className="text-xs font-semibold text-emerald-600">Scan-to-Pay QR Code (Optional)</Label>
+                <select
+                  id="qr-type"
+                  value={qrType}
+                  onChange={(e) => setQrType(e.target.value as any)}
+                  className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-muted/20 px-3 py-1.5 text-xs focus-visible:ring-emerald-500"
+                >
+                  <option value="none">No QR Code</option>
+                  <option value="swish">Swish QR (Sweden)</option>
+                  <option value="paypal">PayPal QR</option>
+                  <option value="url">Custom Payment Link QR</option>
+                </select>
+              </div>
+
+              {qrType !== "none" && (
+                <div className="space-y-1.5">
+                  <Label htmlFor="qr-value" className="text-xs font-semibold text-emerald-600">
+                    {qrType === "swish"
+                      ? "Swish Number (phone/company)"
+                      : qrType === "paypal"
+                      ? "PayPal Username"
+                      : "Payment Link / URL"}
+                  </Label>
+                  <Input
+                    id="qr-value"
+                    value={qrValue}
+                    onChange={(e) => setQrValue(e.target.value)}
+                    placeholder={
+                      qrType === "swish"
+                        ? "e.g. 1234567890"
+                        : qrType === "paypal"
+                        ? "e.g. myusername"
+                        : "https://example.com/pay"
+                    }
+                    className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+                  />
+                </div>
+              )}
+            </div>
+
             <div className="space-y-1.5">
               <Label htmlFor="invoice-footer-note" className="text-xs font-semibold">Invoice Footer Text (Thank You note)</Label>
               <Input
@@ -1002,39 +1070,56 @@ export function InvoiceCreatorClient() {
 
               {/* Document Footer: Payment parameters and F-skatt status */}
               <div className="border-t border-slate-100 pt-6 mt-8 space-y-4">
-                <div className="grid grid-cols-3 gap-4 text-[9px] text-slate-500">
-                  {/* Swedish Bankgiro/Plusgiro details */}
-                  <div>
-                    <span className="font-bold text-slate-700 block uppercase mb-1">
-                      Swedish Payments
-                    </span>
-                    {bankgiro && <div>Bankgiro: <span className="font-semibold text-slate-700">{bankgiro}</span></div>}
-                    {plusgiro && <div>Plusgiro: <span className="font-semibold text-slate-700">{plusgiro}</span></div>}
+                <div className="flex justify-between items-end gap-4">
+                  {/* Payments Grid */}
+                  <div className="grid grid-cols-3 gap-4 flex-1 text-[9px] text-slate-500">
+                    {/* Swedish Bankgiro/Plusgiro details */}
+                    <div>
+                      <span className="font-bold text-slate-700 block uppercase mb-1">
+                        Swedish Payments
+                      </span>
+                      {bankgiro && <div>Bankgiro: <span className="font-semibold text-slate-700">{bankgiro}</span></div>}
+                      {plusgiro && <div>Plusgiro: <span className="font-semibold text-slate-700">{plusgiro}</span></div>}
+                    </div>
+
+                    {/* International Bank details */}
+                    <div>
+                      <span className="font-bold text-slate-700 block uppercase mb-1">
+                        International Payments
+                      </span>
+                      {iban && <div className="truncate">IBAN: <span className="font-semibold text-slate-700">{iban}</span></div>}
+                      {bic && <div>BIC / SWIFT: <span className="font-semibold text-slate-700">{bic}</span></div>}
+                    </div>
+
+                    {/* Terms and F-skatt note */}
+                    <div>
+                      <span className="font-bold text-slate-700 block uppercase mb-1">
+                        Invoicing Terms
+                      </span>
+                      {lateInterest && (
+                        <div>Overdue Interest: <span className="font-semibold text-slate-700">{lateInterest}%</span></div>
+                      )}
+                      {hasFskatt && fskattText && (
+                        <div className="mt-1 font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded inline-block">
+                          {fskattText}
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* International Bank details */}
-                  <div>
-                    <span className="font-bold text-slate-700 block uppercase mb-1">
-                      International Payments
-                    </span>
-                    {iban && <div className="truncate">IBAN: <span className="font-semibold text-slate-700">{iban}</span></div>}
-                    {bic && <div>BIC / SWIFT: <span className="font-semibold text-slate-700">{bic}</span></div>}
-                  </div>
-
-                  {/* Terms and F-skatt note */}
-                  <div>
-                    <span className="font-bold text-slate-700 block uppercase mb-1">
-                      Invoicing Terms
-                    </span>
-                    {lateInterest && (
-                      <div>Overdue Interest: <span className="font-semibold text-slate-700">{lateInterest}%</span></div>
-                    )}
-                    {hasFskatt && fskattText && (
-                      <div className="mt-1 font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded inline-block">
-                        {fskattText}
-                      </div>
-                    )}
-                  </div>
+                  {/* QR Code Container */}
+                  {qrCodeUrl && (
+                    <div className="flex flex-col items-center justify-center p-1.5 border border-slate-100 rounded-lg bg-slate-50 text-center w-20 flex-shrink-0">
+                      <img
+                        src={qrCodeUrl}
+                        alt="Scan to Pay"
+                        className="h-14 w-14 object-contain"
+                      />
+                      <span className="text-[6px] font-bold text-slate-400 uppercase tracking-wider mt-1 block">
+                        {qrType === "swish" ? "Scan to Swish" : "Scan to Pay"}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="text-center text-[9px] text-slate-400 border-t border-slate-50 pt-3">
