@@ -88,10 +88,10 @@ export function InvoicePreview({
       }`}
     >
       <div className="sticky top-20">
-        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5 no-print">
+        <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5 no-print">
           <Icon name="Eye" size={14} className="text-emerald-500" />
           Live Invoice Layout Preview (A4 Formatted)
-        </h3>
+        </h2>
 
         {/* Simulated Paper A4 Document */}
         <div

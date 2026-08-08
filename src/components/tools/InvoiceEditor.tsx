@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/Icon";
@@ -137,6 +136,10 @@ export function InvoiceEditor({
   activeTab,
   layoutMode,
 }: InvoiceEditorProps) {
+  const inputBaseStyle = "flex h-8 w-full min-w-0 border px-2.5 py-1 outline-none text-xs rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50";
+  const inputMutedStyle = `${inputBaseStyle} bg-muted/20 border-muted-foreground/15`;
+  const inputWhiteStyle = `${inputBaseStyle} bg-background border-muted-foreground/15`;
+
   return (
     <div
       className={`${
@@ -147,10 +150,10 @@ export function InvoiceEditor({
     >
       {/* Logo & Seller Info */}
       <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-        <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+        <h2 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
           <Icon name="Home" size={14} className="text-emerald-500" />
           Seller Details (Your Business)
-        </h3>
+        </h2>
 
         {/* Logo Upload Input */}
         <div className="space-y-2">
@@ -169,12 +172,12 @@ export function InvoiceEditor({
               </div>
             ) : (
               <div className="flex-1">
-                <Input
+                <input
                   id="logo-upload"
                   type="file"
                   accept="image/*"
                   onChange={handleLogoChange}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500 cursor-pointer"
+                  className="flex h-8 w-full min-w-0 border px-2.5 py-1 outline-none text-xs rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-1 bg-muted/20 border-muted-foreground/15 cursor-pointer"
                 />
               </div>
             )}
@@ -184,20 +187,20 @@ export function InvoiceEditor({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <Label htmlFor="seller-name" className="text-xs font-semibold">Company/Your Name</Label>
-            <Input
+            <input
               id="seller-name"
               value={sellerName}
               onChange={(e) => setSellerName(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="seller-reg" className="text-xs font-semibold">Org Number (Swedish format optional)</Label>
-            <Input
+            <input
               id="seller-reg"
               value={sellerRegNo}
               onChange={(e) => setSellerRegNo(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
         </div>
@@ -216,12 +219,12 @@ export function InvoiceEditor({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
           <div className="space-y-1.5">
             <Label htmlFor="seller-vat" className="text-xs font-semibold">VAT / Moms Number</Label>
-            <Input
+            <input
               id="seller-vat"
               value={sellerVat}
               onChange={(e) => setSellerVat(e.target.value)}
               placeholder="e.g. SE556123456701"
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
           <div className="flex items-center gap-2 pt-5">
@@ -241,11 +244,11 @@ export function InvoiceEditor({
         {hasFskatt && (
           <div className="space-y-1.5">
             <Label htmlFor="fskatt-text" className="text-xs font-semibold">F-skatt Note Text</Label>
-            <Input
+            <input
               id="fskatt-text"
               value={fskattText}
               onChange={(e) => setFskattText(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
         )}
@@ -253,17 +256,17 @@ export function InvoiceEditor({
 
       {/* Client Details */}
       <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-        <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+        <h2 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
           <Icon name="Users" size={14} className="text-emerald-500" />
           Client Details (Buyer)
-        </h3>
+        </h2>
         <div className="space-y-1.5">
           <Label htmlFor="buyer-name" className="text-xs font-semibold">Client Name/Company</Label>
-          <Input
+          <input
             id="buyer-name"
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
-            className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+            className={inputMutedStyle}
           />
         </div>
         <div className="space-y-1.5">
@@ -278,30 +281,30 @@ export function InvoiceEditor({
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="buyer-ref" className="text-xs font-semibold">Customer Reference / PO Number</Label>
-          <Input
+          <input
             id="buyer-ref"
             value={buyerRef}
             onChange={(e) => setBuyerRef(e.target.value)}
             placeholder="e.g. referensnummer / PO"
-            className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+            className={inputMutedStyle}
           />
         </div>
       </div>
 
       {/* Invoice Meta */}
       <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-        <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+        <h2 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
           <Icon name="Calendar" size={14} className="text-emerald-500" />
           Invoice Parameters
-        </h3>
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <Label htmlFor="invoice-no" className="text-xs font-semibold">Invoice Number</Label>
-            <Input
+            <input
               id="invoice-no"
               value={invoiceNumber}
               onChange={(e) => setInvoiceNumber(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
           <div className="space-y-1.5">
@@ -343,32 +346,32 @@ export function InvoiceEditor({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="space-y-1.5">
             <Label htmlFor="invoice-issue" className="text-xs font-semibold">Issue Date</Label>
-            <Input
+            <input
               id="invoice-issue"
               type="date"
               value={issueDate}
               onChange={(e) => setIssueDate(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg"
+              className={inputMutedStyle}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="invoice-delivery" className="text-xs font-semibold">Delivery Date</Label>
-            <Input
+            <input
               id="invoice-delivery"
               type="date"
               value={deliveryDate}
               onChange={(e) => setDeliveryDate(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg"
+              className={inputMutedStyle}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="invoice-due" className="text-xs font-semibold">Due Date</Label>
-            <Input
+            <input
               id="invoice-due"
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg"
+              className={inputMutedStyle}
             />
           </div>
         </div>
@@ -377,10 +380,10 @@ export function InvoiceEditor({
       {/* Line Items */}
       <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+          <h2 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
             <Icon name="List" size={14} className="text-emerald-500" />
             Line Items
-          </h3>
+          </h2>
           <Button
             variant="outline"
             size="sm"
@@ -408,44 +411,44 @@ export function InvoiceEditor({
               <div className="pr-8 text-xs font-bold text-muted-foreground">Item #{index + 1}</div>
 
               <div className="space-y-1.5">
-                <Label htmlFor={`desc-${item.id}`} className="text-xs font-semibold">Description</Label>
-                <Input
-                  id={`desc-${item.id}`}
+                <Label htmlFor={`desc-item-${index}`} className="text-xs font-semibold">Description</Label>
+                <input
+                  id={`desc-item-${index}`}
                   value={item.description}
                   onChange={(e) => handleUpdateItem(item.id, "description", e.target.value)}
-                  className="text-xs bg-background border-muted-foreground/15 rounded-lg"
+                  className={inputWhiteStyle}
                 />
               </div>
 
               <div className="grid grid-cols-3 gap-2">
                 <div className="space-y-1.5">
-                  <Label htmlFor={`qty-${item.id}`} className="text-xs font-semibold">Quantity</Label>
-                  <Input
-                    id={`qty-${item.id}`}
+                  <Label htmlFor={`qty-item-${index}`} className="text-xs font-semibold">Quantity</Label>
+                  <input
+                    id={`qty-item-${index}`}
                     type="number"
                     min="0"
                     step="any"
                     value={item.quantity}
                     onChange={(e) => handleUpdateItem(item.id, "quantity", e.target.value)}
-                    className="text-xs bg-background border-muted-foreground/15 rounded-lg"
+                    className={inputWhiteStyle}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor={`price-${item.id}`} className="text-xs font-semibold">Unit Price</Label>
-                  <Input
-                    id={`price-${item.id}`}
+                  <Label htmlFor={`price-item-${index}`} className="text-xs font-semibold">Unit Price</Label>
+                  <input
+                    id={`price-item-${index}`}
                     type="number"
                     min="0"
                     step="any"
                     value={item.unitPrice}
                     onChange={(e) => handleUpdateItem(item.id, "unitPrice", e.target.value)}
-                    className="text-xs bg-background border-muted-foreground/15 rounded-lg"
+                    className={inputWhiteStyle}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor={`vat-${item.id}`} className="text-xs font-semibold">VAT / Moms (%)</Label>
+                  <Label htmlFor={`vat-item-${index}`} className="text-xs font-semibold">VAT / Moms (%)</Label>
                   <select
-                    id={`vat-${item.id}`}
+                    id={`vat-item-${index}`}
                     value={[25, 12, 6, 0].includes(item.vatRate) ? item.vatRate : "custom"}
                     onChange={(e) => {
                       const val = e.target.value;
@@ -468,16 +471,16 @@ export function InvoiceEditor({
 
               {![25, 12, 6, 0].includes(item.vatRate) && (
                 <div className="space-y-1.5 pt-1.5 border-t border-border/40 mt-1">
-                  <Label htmlFor={`custom-vat-${item.id}`} className="text-xs font-semibold text-emerald-600">Specify Custom VAT (%)</Label>
-                  <Input
-                    id={`custom-vat-${item.id}`}
+                  <Label htmlFor={`custom-vat-item-${index}`} className="text-xs font-semibold text-emerald-600">Specify Custom VAT (%)</Label>
+                  <input
+                    id={`custom-vat-item-${index}`}
                     type="number"
                     min="0"
                     max="100"
                     step="any"
                     value={item.vatRate}
                     onChange={(e) => handleUpdateItem(item.id, "vatRate", e.target.value)}
-                    className="text-xs bg-background border-muted-foreground/15 rounded-lg w-full max-w-[120px]"
+                    className="flex h-8 w-full min-w-0 border px-2.5 py-1 outline-none text-xs rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-1 bg-background border-muted-foreground/15 w-full max-w-[120px]"
                   />
                 </div>
               )}
@@ -488,60 +491,60 @@ export function InvoiceEditor({
 
       {/* Payment Terms & Bank details */}
       <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-        <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+        <h2 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
           <Icon name="CreditCard" size={14} className="text-emerald-500" />
           Banking & Payment Terms
-        </h3>
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <Label htmlFor="bank-bg" className="text-xs font-semibold">Bankgiro / Routing No</Label>
-            <Input
+            <input
               id="bank-bg"
               value={bankgiro}
               onChange={(e) => setBankgiro(e.target.value)}
               placeholder="e.g. 123-4567 or Routing Code"
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="bank-pg" className="text-xs font-semibold">Plusgiro / Account No</Label>
-            <Input
+            <input
               id="bank-pg"
               value={plusgiro}
               onChange={(e) => setPlusgiro(e.target.value)}
               placeholder="e.g. 987654-3 or Account Code"
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <Label htmlFor="bank-iban" className="text-xs font-semibold">IBAN</Label>
-            <Input
+            <input
               id="bank-iban"
               value={iban}
               onChange={(e) => setIban(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="bank-bic" className="text-xs font-semibold">BIC / SWIFT</Label>
-            <Input
+            <input
               id="bank-bic"
               value={bic}
               onChange={(e) => setBic(e.target.value)}
-              className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              className={inputMutedStyle}
             />
           </div>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="payment-interest" className="text-xs font-semibold">Late Payment Interest Rate (%)</Label>
-          <Input
+          <input
             id="payment-interest"
             value={lateInterest}
             onChange={(e) => setLateInterest(e.target.value)}
             placeholder="e.g. 8"
-            className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+            className={inputMutedStyle}
           />
         </div>
         {/* Scan-to-Pay QR Code Configurations */}
@@ -570,7 +573,7 @@ export function InvoiceEditor({
                   ? "PayPal Username"
                   : "Payment Link / URL"}
               </Label>
-              <Input
+              <input
                 id="qr-value"
                 value={qrValue}
                 onChange={(e) => setQrValue(e.target.value)}
@@ -581,7 +584,7 @@ export function InvoiceEditor({
                     ? "e.g. myusername"
                     : "https://example.com/pay"
                 }
-                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+                className={inputMutedStyle}
               />
             </div>
           )}
@@ -589,12 +592,12 @@ export function InvoiceEditor({
 
         <div className="space-y-1.5">
           <Label htmlFor="invoice-footer-note" className="text-xs font-semibold">Invoice Footer Text (Thank You note)</Label>
-          <Input
+          <input
             id="invoice-footer-note"
             value={footerNote}
             onChange={(e) => setFooterNote(e.target.value)}
             placeholder="e.g. Thank you for your business!"
-            className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+            className={inputMutedStyle}
           />
         </div>
       </div>
