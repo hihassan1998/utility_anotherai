@@ -58,6 +58,7 @@ export function InvoiceCreatorClient() {
   const [iban, setIban] = React.useState("SE12 5000 0000 0123 4567 8901");
   const [bic, setBic] = React.useState("ANDEESSX");
   const [lateInterest, setLateInterest] = React.useState("8");
+  const [footerNote, setFooterNote] = React.useState("Thank you for your business! / Tack för förtroendet!");
 
   // Handle Logo Upload
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -327,6 +328,7 @@ export function InvoiceCreatorClient() {
       setIban("SE12 5000 0000 0123 4567 8901");
       setBic("ANDEESSX");
       setLateInterest("8");
+      setFooterNote("Thank you for your business! / Tack för förtroendet!");
     }
   };
 
@@ -753,6 +755,16 @@ export function InvoiceCreatorClient() {
                 className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
               />
             </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="invoice-footer-note" className="text-xs font-semibold">Invoice Footer Text (Thank You note)</Label>
+              <Input
+                id="invoice-footer-note"
+                value={footerNote}
+                onChange={(e) => setFooterNote(e.target.value)}
+                placeholder="e.g. Thank you for your business!"
+                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              />
+            </div>
           </div>
 
         </div>
@@ -952,7 +964,7 @@ export function InvoiceCreatorClient() {
                 </div>
 
                 <div className="text-center text-[9px] text-slate-400 border-t border-slate-50 pt-3">
-                  Thank you for your business! / Tack för förtroendet!
+                  {footerNote}
                 </div>
               </div>
             </div>
