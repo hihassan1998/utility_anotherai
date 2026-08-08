@@ -390,6 +390,12 @@ export function InvoiceCreatorClient() {
     }
   };
 
+  const paymentColumnsCount = [
+    Boolean(bankgiro || plusgiro),
+    Boolean(iban || bic),
+    Boolean(lateInterest || (hasFskatt && fskattText))
+  ].filter(Boolean).length;
+
   return (
     <div className="space-y-6">
 
@@ -798,22 +804,22 @@ export function InvoiceCreatorClient() {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="bank-bg" className="text-xs font-semibold">Bankgiro</Label>
+                <Label htmlFor="bank-bg" className="text-xs font-semibold">Bankgiro / Routing No</Label>
                 <Input
                   id="bank-bg"
                   value={bankgiro}
                   onChange={(e) => setBankgiro(e.target.value)}
-                  placeholder="e.g. 123-4567"
+                  placeholder="e.g. 123-4567 or Routing Code"
                   className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="bank-pg" className="text-xs font-semibold">Plusgiro</Label>
+                <Label htmlFor="bank-pg" className="text-xs font-semibold">Plusgiro / Account No</Label>
                 <Input
                   id="bank-pg"
                   value={plusgiro}
                   onChange={(e) => setPlusgiro(e.target.value)}
-                  placeholder="e.g. 987654-3"
+                  placeholder="e.g. 987654-3 or Account Code"
                   className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
                 />
               </div>
@@ -939,10 +945,10 @@ export function InvoiceCreatorClient() {
                     <h2 className="text-base font-bold text-slate-900">{sellerName}</h2>
                     <p className="text-[10px] text-slate-500 whitespace-pre-line mt-1">{sellerAddress}</p>
                     {sellerRegNo && (
-                      <p className="text-[10px] text-slate-500 mt-1">Org.nr: {sellerRegNo}</p>
+                      <p className="text-[10px] text-slate-500 mt-1">Reg/Tax No: {sellerRegNo}</p>
                     )}
                     {sellerVat && (
-                      <p className="text-[10px] text-slate-500">VAT-nr: {sellerVat}</p>
+                      <p className="text-[10px] text-slate-500">VAT/Moms No: {sellerVat}</p>
                     )}
                   </div>
 
@@ -1072,39 +1078,48 @@ export function InvoiceCreatorClient() {
               <div className="border-t border-slate-100 pt-6 mt-8 space-y-4">
                 <div className="flex justify-between items-end gap-4">
                   {/* Payments Grid */}
-                  <div className="grid grid-cols-3 gap-4 flex-1 text-[9px] text-slate-500">
+                  <div className={`grid gap-4 flex-1 text-[9px] text-slate-500 ${
+                    paymentColumnsCount === 3 ? "grid-cols-3" :
+                    paymentColumnsCount === 2 ? "grid-cols-2" : "grid-cols-1"
+                  }`}>
                     {/* Swedish Bankgiro/Plusgiro details */}
-                    <div>
-                      <span className="font-bold text-slate-700 block uppercase mb-1">
-                        Swedish Payments
-                      </span>
-                      {bankgiro && <div>Bankgiro: <span className="font-semibold text-slate-700">{bankgiro}</span></div>}
-                      {plusgiro && <div>Plusgiro: <span className="font-semibold text-slate-700">{plusgiro}</span></div>}
-                    </div>
+                    {(bankgiro || plusgiro) && (
+                      <div>
+                        <span className="font-bold text-slate-700 block uppercase mb-1">
+                          Local Payments
+                        </span>
+                        {bankgiro && <div>BG / Routing: <span className="font-semibold text-slate-700">{bankgiro}</span></div>}
+                        {plusgiro && <div>PG / Account: <span className="font-semibold text-slate-700">{plusgiro}</span></div>}
+                      </div>
+                    )}
 
                     {/* International Bank details */}
-                    <div>
-                      <span className="font-bold text-slate-700 block uppercase mb-1">
-                        International Payments
-                      </span>
-                      {iban && <div className="truncate">IBAN: <span className="font-semibold text-slate-700">{iban}</span></div>}
-                      {bic && <div>BIC / SWIFT: <span className="font-semibold text-slate-700">{bic}</span></div>}
-                    </div>
+                    {(iban || bic) && (
+                      <div>
+                        <span className="font-bold text-slate-700 block uppercase mb-1">
+                          International Payments
+                        </span>
+                        {iban && <div className="truncate">IBAN: <span className="font-semibold text-slate-700">{iban}</span></div>}
+                        {bic && <div>BIC / SWIFT: <span className="font-semibold text-slate-700">{bic}</span></div>}
+                      </div>
+                    )}
 
                     {/* Terms and F-skatt note */}
-                    <div>
-                      <span className="font-bold text-slate-700 block uppercase mb-1">
-                        Invoicing Terms
-                      </span>
-                      {lateInterest && (
-                        <div>Overdue Interest: <span className="font-semibold text-slate-700">{lateInterest}%</span></div>
-                      )}
-                      {hasFskatt && fskattText && (
-                        <div className="mt-1 font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded inline-block">
-                          {fskattText}
-                        </div>
-                      )}
-                    </div>
+                    {(lateInterest || (hasFskatt && fskattText)) && (
+                      <div>
+                        <span className="font-bold text-slate-700 block uppercase mb-1">
+                          Invoicing Terms
+                        </span>
+                        {lateInterest && (
+                          <div>Overdue Interest: <span className="font-semibold text-slate-700">{lateInterest}%</span></div>
+                        )}
+                        {hasFskatt && fskattText && (
+                          <div className="mt-1 font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded inline-block">
+                            {fskattText}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* QR Code Container */}
