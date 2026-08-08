@@ -45,11 +45,276 @@ const CURRENCIES = [
   { code: "THB", name: "THB - Thai Baht" },
 ];
 
+const TRANSLATIONS: Record<string, Record<string, string>> = {
+  en: {
+    invoice: "Invoice",
+    invoiceNo: "Invoice No",
+    issueDate: "Issue Date",
+    deliveryDate: "Delivery Date",
+    dueDate: "Due Date",
+    description: "Description",
+    qty: "Qty",
+    unitPrice: "Unit Price",
+    vatPercent: "VAT (%)",
+    total: "Total",
+    subtotal: "Subtotal (excl. VAT)",
+    vatAmount: "VAT",
+    totalVat: "Total VAT",
+    totalDue: "Total Due",
+    localPayments: "Local Payments",
+    internationalPayments: "International Payments",
+    invoicingTerms: "Invoicing Terms",
+    overdueInterest: "Overdue Interest",
+    bankgiro: "BG / Routing",
+    plusgiro: "PG / Account",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "Currency",
+    regNo: "Reg/Tax No",
+    vatNo: "VAT/Moms No",
+    invoiceTo: "Bill To",
+    ourReference: "Our Reference"
+  },
+  sv: {
+    invoice: "Faktura",
+    invoiceNo: "Fakturanr",
+    issueDate: "Fakturadatum",
+    deliveryDate: "Leveransdatum",
+    dueDate: "Förfallodatum",
+    description: "Beskrivning",
+    qty: "Antal",
+    unitPrice: "A-pris",
+    vatPercent: "Moms (%)",
+    total: "Belopp",
+    subtotal: "Delsumma (exkl. moms)",
+    vatAmount: "Moms",
+    totalVat: "Total moms",
+    totalDue: "Att betala",
+    localPayments: "Betalningsuppgifter",
+    internationalPayments: "Utlandsbetalningar",
+    invoicingTerms: "Betalningsvillkor",
+    overdueInterest: "Dröjsmålsränta",
+    bankgiro: "Bankgiro",
+    plusgiro: "Plusgiro",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "Valuta",
+    regNo: "Org.nr",
+    vatNo: "Momsnr",
+    invoiceTo: "Faktureras till",
+    ourReference: "Vår referens"
+  },
+  de: {
+    invoice: "Rechnung",
+    invoiceNo: "Rechnungsnr",
+    issueDate: "Rechnungsdatum",
+    deliveryDate: "Lieferdatum",
+    dueDate: "Fälligkeitsdatum",
+    description: "Beschreibung",
+    qty: "Menge",
+    unitPrice: "Einzelpreis",
+    vatPercent: "MwSt (%)",
+    total: "Gesamt",
+    subtotal: "Zwischensumme (exkl. MwSt)",
+    vatAmount: "MwSt",
+    totalVat: "MwSt. Gesamt",
+    totalDue: "Gesamtbetrag",
+    localPayments: "Inlandszahlungen",
+    internationalPayments: "Auslandsüberweisung",
+    invoicingTerms: "Zahlungsbedingungen",
+    overdueInterest: "Verzugszinsen",
+    bankgiro: "BLZ / Bankverbindung",
+    plusgiro: "Konto-Nr.",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "Währung",
+    regNo: "Steuernummer / Reg-Nr",
+    vatNo: "USt-IdNr.",
+    invoiceTo: "Rechnungsempfänger",
+    ourReference: "Referenz"
+  },
+  fr: {
+    invoice: "Facture",
+    invoiceNo: "Facture N°",
+    issueDate: "Date de facturation",
+    deliveryDate: "Date de livraison",
+    dueDate: "Date d'échéance",
+    description: "Description",
+    qty: "Qté",
+    unitPrice: "Prix unitaire",
+    vatPercent: "TVA (%)",
+    total: "Total",
+    subtotal: "Sous-total (HT)",
+    vatAmount: "TVA",
+    totalVat: "TVA totale",
+    totalDue: "Net à payer",
+    localPayments: "Paiements locaux",
+    internationalPayments: "Paiements internationaux",
+    invoicingTerms: "Conditions de paiement",
+    overdueInterest: "Intérêts de retard",
+    bankgiro: "Code de tri / Agence",
+    plusgiro: "N° de compte",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "Devise",
+    regNo: "N° Siren/Siret",
+    vatNo: "N° TVA Intracommunautaire",
+    invoiceTo: "Facturé à",
+    ourReference: "Notre référence"
+  },
+  es: {
+    invoice: "Factura",
+    invoiceNo: "Factura N°",
+    issueDate: "Fecha de emisión",
+    deliveryDate: "Fecha de entrega",
+    dueDate: "Fecha de vencimiento",
+    description: "Descripción",
+    qty: "Cant.",
+    unitPrice: "Precio unitario",
+    vatPercent: "IVA (%)",
+    total: "Total",
+    subtotal: "Subtotal (excl. IVA)",
+    vatAmount: "IVA",
+    totalVat: "Total IVA",
+    totalDue: "Total a pagar",
+    localPayments: "Pagos locales",
+    internationalPayments: "Pagos internacionales",
+    invoicingTerms: "Condiciones de pago",
+    overdueInterest: "Interés de demora",
+    bankgiro: "Cód. Sucursal / Banco",
+    plusgiro: "Nº de cuenta",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "Moneda",
+    regNo: "NIF / CIF / Registro",
+    vatNo: "Nº IVA",
+    invoiceTo: "Facturar a",
+    ourReference: "Referencia"
+  },
+  zh: {
+    invoice: "发票",
+    invoiceNo: "发票编号",
+    issueDate: "开票日期",
+    deliveryDate: "交付日期",
+    dueDate: "截止日期",
+    description: "描述",
+    qty: "数量",
+    unitPrice: "单价",
+    vatPercent: "增值税 (%)",
+    total: "总计",
+    subtotal: "小计 (不含税)",
+    vatAmount: "增值税",
+    totalVat: "税额总计",
+    totalDue: "应付总额",
+    localPayments: "本地付款",
+    internationalPayments: "国际汇款",
+    invoicingTerms: "付款条件",
+    overdueInterest: "逾期利息",
+    bankgiro: "银行代码 / 联行号",
+    plusgiro: "银行账号",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "货币",
+    regNo: "注册号 / 税号",
+    vatNo: "增值税号",
+    invoiceTo: "客户 (买方)",
+    ourReference: "参考号"
+  },
+  hi: {
+    invoice: "बीजक (इन्वॉयस)",
+    invoiceNo: "बीजक संख्या",
+    issueDate: "जारी करने की तिथि",
+    deliveryDate: "वितरण की तिथि",
+    dueDate: "देय तिथि",
+    description: "विवरण",
+    qty: "मात्रा",
+    unitPrice: "इकाई मूल्य",
+    vatPercent: "जीएसटी / वैट (%)",
+    total: "कुल",
+    subtotal: "उप-योग (कर रहित)",
+    vatAmount: "जीएसटी / वैट",
+    totalVat: "कुल कर",
+    totalDue: "कुल देय राशि",
+    localPayments: "स्थानीय भुगतान",
+    internationalPayments: "अंतर्राष्ट्रीय भुगतान",
+    invoicingTerms: "भुगतान की शर्तें",
+    overdueInterest: "विलंब शुल्क ब्याज",
+    bankgiro: "आईएफएससी कोड",
+    plusgiro: "खाता संख्या",
+    iban: "आईबीएएन (IBAN)",
+    bicSwift: "स्विफ्ट कोड (BIC)",
+    currency: "मुद्रा",
+    regNo: "पंजीकरण संख्या",
+    vatNo: "जीएसटी संख्या",
+    invoiceTo: "सेवा में (खरीदार)",
+    ourReference: "हमारा संदर्भ"
+  },
+  pt: {
+    invoice: "Fatura",
+    invoiceNo: "Fatura Nº",
+    issueDate: "Data de Emissão",
+    deliveryDate: "Data de Entrega",
+    dueDate: "Data de Vencimento",
+    description: "Descrição",
+    qty: "Qtd",
+    unitPrice: "Preço Unitário",
+    vatPercent: "IVA (%)",
+    total: "Total",
+    subtotal: "Subtotal (excl. IVA)",
+    vatAmount: "IVA",
+    totalVat: "Total IVA",
+    totalDue: "Total a Pagar",
+    localPayments: "Pagamentos Locais",
+    internationalPayments: "Transferência Internacional",
+    invoicingTerms: "Condições de Pagamento",
+    overdueInterest: "Juros de Mora",
+    bankgiro: "Agência / Código",
+    plusgiro: "Nº da Conta",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "Moeda",
+    regNo: "CNPJ / NIF",
+    vatNo: "Inscrição Estadual",
+    invoiceTo: "Faturar a",
+    ourReference: "Nossa Referência"
+  },
+  ar: {
+    invoice: "فاتورة",
+    invoiceNo: "رقم الفاتورة",
+    issueDate: "تاريخ الإصدار",
+    deliveryDate: "تاريخ التوصيل",
+    dueDate: "تاريخ الاستحقاق",
+    description: "الوصف",
+    qty: "الكمية",
+    unitPrice: "سعر الوحدة",
+    vatPercent: "الضريبة (%)",
+    total: "الإجمالي",
+    subtotal: "المجموع الفرعي",
+    vatAmount: "الضريبة",
+    totalVat: "مجموع الضريبة",
+    totalDue: "المبلغ المستحق",
+    localPayments: "المدفوعات المحلية",
+    internationalPayments: "التحويلات الدولية",
+    invoicingTerms: "شروط الدفع",
+    overdueInterest: "فائدة التأخير",
+    bankgiro: "رمز الفرع / المصرف",
+    plusgiro: "رقم الحساب",
+    iban: "IBAN",
+    bicSwift: "BIC / SWIFT",
+    currency: "العملة",
+    regNo: "رقم السجل التجاري",
+    vatNo: "الرقم الضريبي",
+    invoiceTo: "فاتورة إلى",
+    ourReference: "مرجعنا"
+  }
+};
+
 
 export function InvoiceCreatorClient() {
   // State for tabs on mobile
   const [activeTab, setActiveTab] = React.useState("edit");
   const [layoutMode, setLayoutMode] = React.useState<"split" | "tabs">("split");
+  const [docLang, setDocLang] = React.useState<"en" | "sv" | "de" | "fr" | "es" | "zh" | "hi" | "pt" | "ar">("en");
 
   // Logo Upload
   const [logo, setLogo] = React.useState<string | null>(null);
@@ -387,6 +652,55 @@ export function InvoiceCreatorClient() {
       setLayoutMode("split");
       setQrType("none");
       setQrValue("");
+      setDocLang("en");
+    }
+  };
+
+  const handleLangChange = (lang: "en" | "sv" | "de" | "fr" | "es" | "zh" | "hi" | "pt" | "ar") => {
+    setDocLang(lang);
+    
+    // Auto-update placeholders if still default
+    const defaults = [
+      "Thank you for your business! / Tack för förtroendet!",
+      "Thank you for your business!",
+      "Tack för ditt förtroende!",
+      "Vielen Dank für Ihren Auftrag!",
+      "Merci pour votre confiance!",
+      "¡Gracias por su compra!",
+      "感谢您的光临与支持！",
+      "आपके व्यवसाय के लिए धन्यवाद!",
+      "Obrigado pela preferência!",
+      "شكراً لتعاملكم معنا!"
+    ];
+    if (defaults.includes(footerNote)) {
+      if (lang === "sv") {
+        setFooterNote("Tack för ditt förtroende!");
+        setFskattText("Godkänd för F-skatt");
+      } else if (lang === "de") {
+        setFooterNote("Vielen Dank für Ihren Auftrag!");
+        setFskattText("Zugelassen für F-Steuer");
+      } else if (lang === "fr") {
+        setFooterNote("Merci pour votre confiance!");
+        setFskattText("Enregistré pour F-tax");
+      } else if (lang === "es") {
+        setFooterNote("¡Gracias por su compra!");
+        setFskattText("Registrado para F-tax");
+      } else if (lang === "zh") {
+        setFooterNote("感谢您的光临与支持！");
+        setFskattText("已批准F-tax");
+      } else if (lang === "hi") {
+        setFooterNote("आपके व्यवसाय के लिए धन्यवाद!");
+        setFskattText("एफ-टैक्स अनुमोदित");
+      } else if (lang === "pt") {
+        setFooterNote("Obrigado pela preferência!");
+        setFskattText("Aprovado para F-tax");
+      } else if (lang === "ar") {
+        setFooterNote("شكراً لتعاملكم معنا!");
+        setFskattText("معتمد للضريبة");
+      } else {
+        setFooterNote("Thank you for your business!");
+        setFskattText("Approved for F-tax");
+      }
     }
   };
 
@@ -395,6 +709,8 @@ export function InvoiceCreatorClient() {
     Boolean(iban || bic),
     Boolean(lateInterest || (hasFskatt && fskattText))
   ].filter(Boolean).length;
+
+  const t = TRANSLATIONS[docLang];
 
   return (
     <div className="space-y-6">
@@ -654,6 +970,26 @@ export function InvoiceCreatorClient() {
                   ))}
                 </select>
               </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="invoice-lang" className="text-xs font-semibold text-emerald-600">Document Language / Invoice Translation</Label>
+              <select
+                id="invoice-lang"
+                value={docLang}
+                onChange={(e) => handleLangChange(e.target.value as any)}
+                className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-muted/20 px-3 py-1.5 text-xs focus-visible:ring-emerald-500"
+              >
+                <option value="en">English (Default)</option>
+                <option value="sv">Svenska (Swedish)</option>
+                <option value="de">Deutsch (German)</option>
+                <option value="fr">Français (French)</option>
+                <option value="es">Español (Spanish)</option>
+                <option value="zh">中文 (Chinese)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="pt">Português (Portuguese)</option>
+                <option value="ar">العربية (Arabic)</option>
+              </select>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="space-y-1.5">
@@ -945,30 +1281,30 @@ export function InvoiceCreatorClient() {
                     <h2 className="text-base font-bold text-slate-900">{sellerName}</h2>
                     <p className="text-[10px] text-slate-500 whitespace-pre-line mt-1">{sellerAddress}</p>
                     {sellerRegNo && (
-                      <p className="text-[10px] text-slate-500 mt-1">Reg/Tax No: {sellerRegNo}</p>
+                      <p className="text-[10px] text-slate-500 mt-1">{t.regNo}: {sellerRegNo}</p>
                     )}
                     {sellerVat && (
-                      <p className="text-[10px] text-slate-500">VAT/Moms No: {sellerVat}</p>
+                      <p className="text-[10px] text-slate-500">{t.vatNo}: {sellerVat}</p>
                     )}
                   </div>
 
                   <div className="text-right">
                     <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 uppercase">
-                      Invoice
+                      {t.invoice}
                     </h1>
                     <div className="mt-3 space-y-1 font-medium text-slate-700">
                       <div>
-                        <span className="text-slate-400 font-normal">Invoice No:</span> {invoiceNumber}
+                        <span className="text-slate-400 font-normal">{t.invoiceNo}:</span> {invoiceNumber}
                       </div>
                       <div>
-                        <span className="text-slate-400 font-normal">Issue Date:</span> {issueDate}
+                        <span className="text-slate-400 font-normal">{t.issueDate}:</span> {issueDate}
                       </div>
                       <div>
-                        <span className="text-slate-400 font-normal">Due Date:</span> {dueDate}
+                        <span className="text-slate-400 font-normal">{t.dueDate}:</span> {dueDate}
                       </div>
                       {deliveryDate && (
                         <div>
-                          <span className="text-slate-400 font-normal">Delivery Date:</span> {deliveryDate}
+                          <span className="text-slate-400 font-normal">{t.deliveryDate}:</span> {deliveryDate}
                         </div>
                       )}
                     </div>
@@ -979,7 +1315,7 @@ export function InvoiceCreatorClient() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
                     <span className="text-[9px] font-bold text-slate-400 uppercase block mb-1">
-                      Invoice To (Buyer)
+                      {t.invoiceTo}
                     </span>
                     <div className="font-bold text-slate-900 text-[11px]">{buyerName}</div>
                     <div className="text-[10px] text-slate-600 whitespace-pre-line mt-1">
@@ -991,12 +1327,12 @@ export function InvoiceCreatorClient() {
                     <div>
                       {buyerRef && (
                         <div>
-                          <span className="text-slate-400">Our Reference:</span>{" "}
+                          <span className="text-slate-400">{t.ourReference}:</span>{" "}
                           <span className="font-semibold text-slate-800">{buyerRef}</span>
                         </div>
                       )}
                       <div>
-                        <span className="text-slate-400">Currency:</span>{" "}
+                        <span className="text-slate-400">{t.currency}:</span>{" "}
                         <span className="font-semibold text-slate-800">{currency}</span>
                       </div>
                     </div>
@@ -1007,11 +1343,11 @@ export function InvoiceCreatorClient() {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b-2 border-slate-200 text-slate-400 text-[9px] uppercase tracking-wider font-bold">
-                      <th className="py-2.5">Description</th>
-                      <th className="py-2.5 text-center w-16">Qty</th>
-                      <th className="py-2.5 text-right w-24">Unit Price</th>
-                      <th className="py-2.5 text-center w-16">VAT (%)</th>
-                      <th className="py-2.5 text-right w-24">Total</th>
+                      <th className="py-2.5">{t.description}</th>
+                      <th className="py-2.5 text-center w-16">{t.qty}</th>
+                      <th className="py-2.5 text-right w-24">{t.unitPrice}</th>
+                      <th className="py-2.5 text-center w-16">{t.vatPercent}</th>
+                      <th className="py-2.5 text-right w-24">{t.total}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1038,7 +1374,7 @@ export function InvoiceCreatorClient() {
                 <div className="flex justify-end pt-4">
                   <div className="w-64 space-y-2 border-t border-slate-100 pt-4">
                     <div className="flex justify-between text-slate-600">
-                      <span>Subtotal (excl. VAT)</span>
+                      <span>{t.subtotal}</span>
                       <span className="font-semibold">
                         {calculatedTotals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
                       </span>
@@ -1049,7 +1385,7 @@ export function InvoiceCreatorClient() {
                       if (amount === 0) return null;
                       return (
                         <div key={rate} className="flex justify-between text-slate-500 text-[9px]">
-                          <span>VAT / Moms ({rate}%)</span>
+                          <span>{t.vatAmount} ({rate}%)</span>
                           <span>
                             {amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
                           </span>
@@ -1058,14 +1394,14 @@ export function InvoiceCreatorClient() {
                     })}
 
                     <div className="flex justify-between text-slate-600 border-b border-slate-100 pb-2">
-                      <span>Total VAT</span>
+                      <span>{t.totalVat}</span>
                       <span>
                         {calculatedTotals.totalVat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
                       </span>
                     </div>
 
                     <div className="flex justify-between text-slate-900 text-sm font-extrabold pt-1">
-                      <span>Total Due</span>
+                      <span>{t.totalDue}</span>
                       <span className="text-emerald-700">
                         {calculatedTotals.grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
                       </span>
@@ -1086,10 +1422,10 @@ export function InvoiceCreatorClient() {
                     {(bankgiro || plusgiro) && (
                       <div>
                         <span className="font-bold text-slate-700 block uppercase mb-1">
-                          Local Payments
+                          {t.localPayments}
                         </span>
-                        {bankgiro && <div>BG / Routing: <span className="font-semibold text-slate-700">{bankgiro}</span></div>}
-                        {plusgiro && <div>PG / Account: <span className="font-semibold text-slate-700">{plusgiro}</span></div>}
+                        {bankgiro && <div>{t.bankgiro}: <span className="font-semibold text-slate-700">{bankgiro}</span></div>}
+                        {plusgiro && <div>{t.plusgiro}: <span className="font-semibold text-slate-700">{plusgiro}</span></div>}
                       </div>
                     )}
 
@@ -1097,10 +1433,10 @@ export function InvoiceCreatorClient() {
                     {(iban || bic) && (
                       <div>
                         <span className="font-bold text-slate-700 block uppercase mb-1">
-                          International Payments
+                          {t.internationalPayments}
                         </span>
-                        {iban && <div className="truncate">IBAN: <span className="font-semibold text-slate-700">{iban}</span></div>}
-                        {bic && <div>BIC / SWIFT: <span className="font-semibold text-slate-700">{bic}</span></div>}
+                        {iban && <div className="truncate">{t.iban}: <span className="font-semibold text-slate-700">{iban}</span></div>}
+                        {bic && <div>{t.bicSwift}: <span className="font-semibold text-slate-700">{bic}</span></div>}
                       </div>
                     )}
 
@@ -1108,10 +1444,10 @@ export function InvoiceCreatorClient() {
                     {(lateInterest || (hasFskatt && fskattText)) && (
                       <div>
                         <span className="font-bold text-slate-700 block uppercase mb-1">
-                          Invoicing Terms
+                          {t.invoicingTerms}
                         </span>
                         {lateInterest && (
-                          <div>Overdue Interest: <span className="font-semibold text-slate-700">{lateInterest}%</span></div>
+                          <div>{t.overdueInterest}: <span className="font-semibold text-slate-700">{lateInterest}%</span></div>
                         )}
                         {hasFskatt && fskattText && (
                           <div className="mt-1 font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded inline-block">
