@@ -212,9 +212,9 @@ export const siteConfig = {
       ]
     },
     {
-      id: "invoice",
+      id: "free-invoice-generator",
       name: "Free Invoice Generator",
-      href: "/invoice",
+      href: "/free-invoice-generator",
       iconName: "FileSpreadsheet",
       description: "Free online invoice generator to create and download professional PDF invoices instantly. Swedish & General market compatible.",
       longDescription: "Our Free Invoice Generator helps you build, preview, and download professional corporate invoices entirely in your browser. Fully compliant with both general standards and Swedish invoicing requirements (F-skatt, VAT/Moms rates, Bankgiro, and customer reference number). Upload a company logo, enter line items with custom VAT/Moms percentages, and generate a print-friendly A4 PDF document in seconds.",

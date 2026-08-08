@@ -6,13 +6,13 @@ export const metadata: Metadata = {
   title: "Free Invoice Generator - Create PDF Invoices Online",
   description: "Free online invoice generator. Create, preview, and download professional PDF invoices instantly. Fully supports General and Swedish markets (F-skatt, VAT/Moms, Bankgiro).",
   alternates: {
-    canonical: "/invoice",
+    canonical: "/free-invoice-generator",
   },
 };
 
 export default function InvoiceCreatorPage() {
   return (
-    <ToolLayout toolId="invoice">
+    <ToolLayout toolId="free-invoice-generator">
       <div className="space-y-12">
         <InvoiceCreatorClient />
         

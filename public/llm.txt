@@ -7,7 +7,7 @@ https://anotool.com
 
 ## Available Tools
 
-- [/invoice](https://anotool.com/invoice): **Free Invoice Generator**. Create, preview, and download professional PDF invoices instantly. Fully supports Swedish (F-skatt, Moms/VAT, Bankgiro/Plusgiro) and General/International markets, complete with Swish QR pay code generator.
+- [/free-invoice-generator](https://anotool.com/free-invoice-generator): **Free Invoice Generator**. Create, preview, and download professional PDF invoices instantly. Fully supports Swedish (F-skatt, Moms/VAT, Bankgiro/Plusgiro) and General/International markets, complete with Swish QR pay code generator.
 - [/word-counter](https://anotool.com/word-counter): **Word Counter**. Real-time word, character, sentence, and paragraph counters, supporting emoji count and reading/speaking times.
 - [/character-counter](https://anotool.com/character-counter): **Character Counter**. Count characters and words with real-time text analysis.
 - [/percentage-calculator](https://anotool.com/percentage-calculator): **Percentage Calculator**. Calculate percentage increases, decreases, ratios, and fractions.
