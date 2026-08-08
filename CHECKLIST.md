@@ -318,3 +318,25 @@ URL:
 - [x] Internal links
 - [x] Sitemap inclusion verified
 - [x] Production deployment verified
+
+## Invoice Creator
+
+URL:
+
+/invoice
+
+- [x] Tool implemented
+- [x] Calculation/function tested
+- [x] Edge cases tested
+- [x] Mobile tested
+- [x] Accessibility checked
+- [x] Unique title
+- [x] Unique meta description
+- [x] H1 exists
+- [x] Explanation content
+- [x] Examples
+- [x] FAQs
+- [x] Related tools
+- [x] Internal links
+- [x] Sitemap inclusion verified
+- [x] Production deployment verified

@@ -210,6 +210,34 @@ export const siteConfig = {
           answer: "Yes, Unicode emojis and special symbols are correctly processed and included in character counts."
         }
       ]
+    },
+    {
+      id: "invoice",
+      name: "Invoice Creator",
+      href: "/invoice",
+      iconName: "FileSpreadsheet",
+      description: "Create professional, print-ready invoices for the general and Swedish markets with live A4 preview.",
+      longDescription: "Our free, private Invoice Creator helps you build, preview, and download professional corporate invoices entirely in your browser. Fully compliant with both general standards and Swedish invoicing requirements (F-skatt, VAT/Moms rates, Bankgiro, and customer reference number). Upload a company logo, enter line items with flexible VAT settings, and generate a print-friendly A4 PDF document in seconds.",
+      keywords: ["Invoice Creator", "Free Invoice Generator", "Swedish Invoice Maker", "F-skatt Invoice", "Moms Calculator", "Bankgiro Invoice Template"],
+      examples: [
+        "Generate a general business invoice with custom logo, subtotal, and tax breakdowns.",
+        "Create a Swedish market invoice specifying 'Godkänd för F-skatt' and Bankgiro details.",
+        "Add multiple products or services with automatic VAT calculation (25%, 12%, 6%)."
+      ],
+      faqs: [
+        {
+          question: "Can I use this invoice creator for the Swedish market?",
+          answer: "Yes. Our tool is optimized for Sweden, providing designated fields for F-skattsedel registration status ('Godkänd för F-skatt'), Moms (VAT) rates (25%, 12%, and 6%), Moms amounts in SEK, customer references (referensnummer), and Bankgiro/Plusgiro payment methods."
+        },
+        {
+          question: "How do I download or save my created invoice as a PDF?",
+          answer: "Click the 'Print / Download PDF' button. This will trigger your browser's native print interface where you can choose 'Save as PDF' as the destination. The print layout is specifically styled to hide the app layout, editor inputs, and margins for a perfectly formatted A4 document."
+        },
+        {
+          question: "Is my billing and client data stored on your servers?",
+          answer: "No. Privacy is our top priority. All invoice creation, logo image processing, and calculations happen 100% locally in your browser. None of your business, client, or financial information is uploaded or stored."
+        }
+      ]
     }
   ] as Tool[]
 };

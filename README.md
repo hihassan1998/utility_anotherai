@@ -10,6 +10,7 @@ Calculations, conversions, and inputs run 100% locally in the browser, ensuring 
 
 *   **Word Counter**: Count words, characters, sentences, paragraphs, unique words, keyword density, and estimate reading/speaking times in real time.
 *   **Character Counter**: Live character limit meters for Twitter/X, SMS, Meta Titles, Meta Descriptions, and LinkedIn posts with detailed character category breakdowns.
+*   **Invoice Creator**: Build professional, print-ready corporate invoices tailored for general business or Swedish markets (supports F-skatt status, Moms tax calculation, Bankgiro, and customer reference codes).
 *   **Age Calculator**: Get exact breakdowns of years, months, days, total days lived, day of the week, and live countdowns to birthdays with custom celebration elements.
 *   **BMI Calculator**: Compute Body Mass Index for adults using Metric or Imperial systems, featuring an interactive color gauge and target weight ranges.
 *   **Date Duration Calculator**: Compute duration between two calendar dates in years, months, weeks, days, hours, and minutes.
