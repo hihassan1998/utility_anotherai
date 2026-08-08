@@ -2,10 +2,9 @@
 
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/Icon";
+import { InvoiceEditor } from "./InvoiceEditor";
+import { InvoicePreview } from "./InvoicePreview";
 
 interface LineItem {
   id: string;
@@ -246,7 +245,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     currency: "मुद्रा",
     regNo: "पंजीकरण संख्या",
     vatNo: "जीएसटी संख्या",
-    invoiceTo: "सेवा में (खरीदार)",
+    invoiceTo: "सेवा में (खरीدار)",
     ourReference: "हमारा संदर्भ"
   },
   pt: {
@@ -308,7 +307,6 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     ourReference: "مرجعنا"
   }
 };
-
 
 export function InvoiceCreatorClient() {
   // State for tabs on mobile
@@ -440,7 +438,6 @@ export function InvoiceCreatorClient() {
 
     let data = "";
     if (qrType === "swish") {
-      // Swish JSON payment payload format
       data = JSON.stringify({
         version: 1,
         payee: qrValue.replace(/\s+/g, ""),
@@ -462,41 +459,58 @@ export function InvoiceCreatorClient() {
 
     // Create a temporary hidden iframe
     const iframe = document.createElement("iframe");
-    iframe.style.position = "fixed";
-    iframe.style.right = "0";
-    iframe.style.bottom = "0";
-    iframe.style.width = "0";
-    iframe.style.height = "0";
-    iframe.style.border = "0";
+    iframe.style.position = "absolute";
+    iframe.style.width = "0px";
+    iframe.style.height = "0px";
+    iframe.style.border = "none";
     document.body.appendChild(iframe);
 
-    const doc = iframe.contentWindow?.document || iframe.contentDocument;
+    const doc = iframe.contentWindow?.document;
     if (!doc) return;
 
-    // Write pristine HTML content with targeted invoice styling
+    // Inject base A4 layout structure and matching styling variables
     doc.write(`
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Invoice - ${invoiceNumber}</title>
+          <title>${invoiceNumber} - Print</title>
           <style>
+            /* A4 Print Layout Reset */
             @page {
               size: A4;
               margin: 15mm;
             }
             body {
-              font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-size: 11px;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-size: 10px;
               line-height: 1.5;
               color: #1e293b;
+              background-color: #ffffff;
               margin: 0;
               padding: 0;
-              background: #fff;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
             }
             
-            /* Text & Colors */
-            .text-slate-800 { color: #1e293b; }
+            /* Helper Utilities */
+            .text-right { text-align: right; }
+            .text-center { text-align: center; }
+            .font-bold { font-weight: 700; }
+            .font-extrabold { font-weight: 800; }
+            .font-semibold { font-weight: 600; }
+            .font-normal { font-weight: 400; }
+            .uppercase { text-transform: uppercase; }
+            .tracking-wider { letter-spacing: 0.05em; }
+            .tracking-tight { letter-spacing: -0.025em; }
+            .whitespace-pre-line { white-space: pre-line; }
+            .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .block { display: block; }
+            .inline-block { display: inline-block; }
+            .flex-shrink-0 { flex-shrink: 0; }
+            
+            /* Color Tokens */
             .text-slate-900 { color: #0f172a; }
+            .text-slate-800 { color: #1e293b; }
             .text-slate-700 { color: #334155; }
             .text-slate-600 { color: #475569; }
             .text-slate-500 { color: #64748b; }
@@ -540,40 +554,31 @@ export function InvoiceCreatorClient() {
             .justify-between { justify-content: space-between; }
             .justify-end { justify-content: flex-end; }
             .items-start { align-items: flex-start; }
+            .items-end { align-items: flex-end; }
             .items-center { align-items: center; }
             .flex-col { flex-direction: column; }
+            .flex-1 { flex: 1 1 0%; }
             .grid { display: grid; }
             .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
             .gap-4 { gap: 1rem; }
             
-            /* Typography Sizing */
-            .font-bold { font-weight: 700; }
-            .font-semibold { font-weight: 600; }
-            .font-extrabold { font-weight: 800; }
-            .font-medium { font-weight: 500; }
-            .font-normal { font-weight: 400; }
-            .text-base { font-size: 11px; }
-            .text-sm { font-size: 11px; }
-            .text-xs { font-size: 10px; }
-            .text-lg { font-size: 13px; }
-            .text-2xl { font-size: 16px; }
-            .text-\\[9px\\] { font-size: 9px; }
-            .text-\\[10px\\] { font-size: 10px; }
-            .text-\\[11px\\] { font-size: 11px; }
-            .uppercase { text-transform: uppercase; }
-            .tracking-tight { letter-spacing: -0.025em; }
-            .tracking-wider { letter-spacing: 0.05em; }
-            .text-right { text-align: right; }
-            .text-center { text-align: center; }
-            .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-            .whitespace-pre-line { white-space: pre-line; }
-            .inline-block { display: inline-block; }
+            /* Sizing & Borders */
+            .w-full { width: 100%; }
+            .h-12 { height: 3rem; }
+            .h-14 { height: 3.5rem; }
+            .w-14 { width: 3.5rem; }
+            .h-10 { height: 2.5rem; }
+            .w-10 { width: 2.5rem; }
+            .max-w-[200px] { max-width: 200px; }
+            .w-64 { width: 16rem; }
+            .py-2.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+            .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+            table { border-spacing: 0; width: 100%; }
+            th { font-weight: bold; }
             
-            /* Table formatting */
-            table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-            th { border-bottom: 2px solid #cbd5e1; color: #64748b; font-size: 9px; text-transform: uppercase; font-weight: 700; padding: 8px 0; }
-            td { border-bottom: 1px solid #f1f5f9; padding: 8px 0; }
+            /* Hide print headers/adsense */
+            .no-print { display: none !important; }
             img { max-height: 48px; max-width: 180px; object-fit: contain; }
             .w-full { width: 100%; }
             .w-16 { width: 4rem; }
@@ -720,7 +725,7 @@ export function InvoiceCreatorClient() {
         <div className="flex items-center gap-2">
           <Button
             onClick={handlePrint}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs h-9 rounded-lg"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs h-9 rounded-lg focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <Icon name="Printer" size={14} className="mr-1.5" />
             Print / Save as PDF
@@ -728,759 +733,158 @@ export function InvoiceCreatorClient() {
           <Button
             variant="outline"
             onClick={handleReset}
-            className="border-border text-xs h-9 rounded-lg"
+            className="border-border text-xs h-9 rounded-lg focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <Icon name="RotateCcw" size={14} className="mr-1.5" />
             Reset Form
           </Button>
         </div>
 
-          {/* Desktop Layout Switcher */}
-          <div className="hidden lg:flex items-center gap-2 border-l border-border pl-3">
-            <span className="text-xs text-muted-foreground font-semibold">Workspace View:</span>
-            <div className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground border border-border">
-              <Button
-                variant={layoutMode === "split" ? "secondary" : "ghost"}
-                size="sm"
-                onClick={() => setLayoutMode("split")}
-                className="text-xs h-7 px-3 rounded-md"
-              >
-                <Icon name="Columns" size={13} className="mr-1" />
-                Side-by-Side
-              </Button>
-              <Button
-                variant={layoutMode === "tabs" ? "secondary" : "ghost"}
-                size="sm"
-                onClick={() => {
-                  setLayoutMode("tabs");
-                  setActiveTab("edit");
-                }}
-                className="text-xs h-7 px-3 rounded-md"
-              >
-                <Icon name="Layers" size={13} className="mr-1" />
-                Single Column Switcher
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Switcher Toggles: visible on mobile, and on desktop if layoutMode is tabs */}
-        <div className={layoutMode === "tabs" ? "block" : "lg:hidden"}>
+        {/* Desktop Layout Switcher */}
+        <div className="hidden lg:flex items-center gap-2 border-l border-border pl-3">
+          <span className="text-xs text-muted-foreground font-semibold">Workspace View:</span>
           <div className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground border border-border">
             <Button
-              variant={activeTab === "edit" ? "secondary" : "ghost"}
+              variant={layoutMode === "split" ? "secondary" : "ghost"}
               size="sm"
-              onClick={() => setActiveTab("edit")}
-              className="text-xs h-7 px-3 rounded-md"
+              onClick={() => setLayoutMode("split")}
+              className="text-xs h-7 px-3 rounded-md focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
             >
-              Edit Details
+              <Icon name="Columns" size={13} className="mr-1" />
+              Side-by-Side
             </Button>
             <Button
-              variant={activeTab === "preview" ? "secondary" : "ghost"}
+              variant={layoutMode === "tabs" ? "secondary" : "ghost"}
               size="sm"
-              onClick={() => setActiveTab("preview")}
-              className="text-xs h-7 px-3 rounded-md"
+              onClick={() => {
+                setLayoutMode("tabs");
+                setActiveTab("edit");
+              }}
+              className="text-xs h-7 px-3 rounded-md focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
             >
-              Live Preview
+              <Icon name="Layers" size={13} className="mr-1" />
+              Single Column Switcher
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* Switcher Toggles: visible on mobile, and on desktop if layoutMode is tabs */}
+      <div className={layoutMode === "tabs" ? "block" : "lg:hidden"}>
+        <div className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground border border-border">
+          <Button
+            variant={activeTab === "edit" ? "secondary" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("edit")}
+            className="text-xs h-7 px-3 rounded-md focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+          >
+            Edit Details
+          </Button>
+          <Button
+            variant={activeTab === "preview" ? "secondary" : "ghost"}
+            size="sm"
+            onClick={() => setActiveTab("preview")}
+            className="text-xs h-7 px-3 rounded-md focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none"
+          >
+            Live Preview
+          </Button>
+        </div>
+      </div>
 
       {/* Main Grid Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Side: Invoice Editor Forms */}
-        <div
-          className={`${
-            layoutMode === "tabs" ? "lg:col-span-12" : "lg:col-span-6"
-          } space-y-6 no-print ${
-            activeTab === "edit" ? "block" : (layoutMode === "tabs" ? "hidden" : "hidden lg:block")
-          }`}
-        >
-          
-          {/* Logo & Seller Info */}
-          <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-            <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <Icon name="Home" size={14} className="text-emerald-500" />
-              Seller Details (Your Business)
-            </h3>
-
-            {/* Logo Upload Input */}
-            <div className="space-y-2">
-              <Label className="text-xs font-semibold">Company Logo</Label>
-              <div className="flex items-center gap-3">
-                {logo ? (
-                  <div className="relative border border-border/80 rounded-lg p-2 h-16 w-28 bg-muted/10 flex items-center justify-center">
-                    <img src={logo} alt="Company Logo Preview" className="h-full object-contain" />
-                    <button
-                      onClick={handleClearLogo}
-                      className="absolute -top-1.5 -right-1.5 bg-destructive text-white rounded-full p-0.5 shadow-md hover:bg-destructive/90"
-                      title="Remove logo"
-                    >
-                      <Icon name="X" size={10} />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex-1">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleLogoChange}
-                      className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500 cursor-pointer"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="seller-name" className="text-xs font-semibold">Company/Your Name</Label>
-                <Input
-                  id="seller-name"
-                  value={sellerName}
-                  onChange={(e) => setSellerName(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="seller-reg" className="text-xs font-semibold">Org Number (Swedish format optional)</Label>
-                <Input
-                  id="seller-reg"
-                  value={sellerRegNo}
-                  onChange={(e) => setSellerRegNo(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="seller-address" className="text-xs font-semibold">Seller Address</Label>
-              <Textarea
-                id="seller-address"
-                value={sellerAddress}
-                onChange={(e) => setSellerAddress(e.target.value)}
-                rows={3}
-                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-              <div className="space-y-1.5">
-                <Label htmlFor="seller-vat" className="text-xs font-semibold">VAT / Moms Number</Label>
-                <Input
-                  id="seller-vat"
-                  value={sellerVat}
-                  onChange={(e) => setSellerVat(e.target.value)}
-                  placeholder="e.g. SE556123456701"
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-              <div className="flex items-center gap-2 pt-5">
-                <input
-                  type="checkbox"
-                  id="seller-fskatt"
-                  checked={hasFskatt}
-                  onChange={(e) => setHasFskatt(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
-                />
-                <Label htmlFor="seller-fskatt" className="text-xs font-semibold cursor-pointer select-none">
-                  F-skattsedel Status Statement
-                </Label>
-              </div>
-            </div>
-
-            {hasFskatt && (
-              <div className="space-y-1.5">
-                <Label htmlFor="fskatt-text" className="text-xs font-semibold">F-skatt Note Text</Label>
-                <Input
-                  id="fskatt-text"
-                  value={fskattText}
-                  onChange={(e) => setFskattText(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Client Details */}
-          <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-            <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <Icon name="Users" size={14} className="text-emerald-500" />
-              Client Details (Buyer)
-            </h3>
-            <div className="space-y-1.5">
-              <Label htmlFor="buyer-name" className="text-xs font-semibold">Client Name/Company</Label>
-              <Input
-                id="buyer-name"
-                value={buyerName}
-                onChange={(e) => setBuyerName(e.target.value)}
-                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="buyer-address" className="text-xs font-semibold">Client Address</Label>
-              <Textarea
-                id="buyer-address"
-                value={buyerAddress}
-                onChange={(e) => setBuyerAddress(e.target.value)}
-                rows={3}
-                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="buyer-ref" className="text-xs font-semibold">Customer Reference / PO Number</Label>
-              <Input
-                id="buyer-ref"
-                value={buyerRef}
-                onChange={(e) => setBuyerRef(e.target.value)}
-                placeholder="e.g. referensnummer / PO"
-                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-              />
-            </div>
-          </div>
-
-          {/* Invoice Meta */}
-          <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-            <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <Icon name="Calendar" size={14} className="text-emerald-500" />
-              Invoice Parameters
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="invoice-no" className="text-xs font-semibold">Invoice Number</Label>
-                <Input
-                  id="invoice-no"
-                  value={invoiceNumber}
-                  onChange={(e) => setInvoiceNumber(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="invoice-currency" className="text-xs font-semibold">Currency</Label>
-                <select
-                  id="invoice-currency"
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                  className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-muted/20 px-3 py-1.5 text-xs focus-visible:ring-emerald-500"
-                >
-                  {CURRENCIES.map((cur) => (
-                    <option key={cur.code} value={cur.code}>
-                      {cur.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="invoice-lang" className="text-xs font-semibold text-emerald-600">Document Language / Invoice Translation</Label>
-              <select
-                id="invoice-lang"
-                value={docLang}
-                onChange={(e) => handleLangChange(e.target.value as any)}
-                className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-muted/20 px-3 py-1.5 text-xs focus-visible:ring-emerald-500"
-              >
-                <option value="en">English (Default)</option>
-                <option value="sv">Svenska (Swedish)</option>
-                <option value="de">Deutsch (German)</option>
-                <option value="fr">Français (French)</option>
-                <option value="es">Español (Spanish)</option>
-                <option value="zh">中文 (Chinese)</option>
-                <option value="hi">हिन्दी (Hindi)</option>
-                <option value="pt">Português (Portuguese)</option>
-                <option value="ar">العربية (Arabic)</option>
-              </select>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="space-y-1.5">
-                <Label htmlFor="invoice-issue" className="text-xs font-semibold">Issue Date</Label>
-                <Input
-                  id="invoice-issue"
-                  type="date"
-                  value={issueDate}
-                  onChange={(e) => setIssueDate(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="invoice-delivery" className="text-xs font-semibold">Delivery Date</Label>
-                <Input
-                  id="invoice-delivery"
-                  type="date"
-                  value={deliveryDate}
-                  onChange={(e) => setDeliveryDate(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="invoice-due" className="text-xs font-semibold">Due Date</Label>
-                <Input
-                  id="invoice-due"
-                  type="date"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Line Items */}
-          <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                <Icon name="List" size={14} className="text-emerald-500" />
-                Line Items
-              </h3>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleAddItem}
-                className="h-8 text-xs border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10"
-              >
-                <Icon name="Plus" size={12} className="mr-1" /> Add Item
-              </Button>
-            </div>
-
-            <div className="space-y-4">
-              {lineItems.map((item, index) => (
-                <div key={item.id} className="p-3 border border-border/50 rounded-lg space-y-3 bg-muted/10 relative">
-                  <div className="absolute top-2.5 right-2.5">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveItem(item.id)}
-                      className="h-7 w-7 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                      title="Delete item"
-                    >
-                      <Icon name="Trash2" size={13} />
-                    </Button>
-                  </div>
-                  <div className="pr-8 text-xs font-bold text-muted-foreground">Item #{index + 1}</div>
-
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold">Description</Label>
-                    <Input
-                      value={item.description}
-                      onChange={(e) => handleUpdateItem(item.id, "description", e.target.value)}
-                      className="text-xs bg-background border-muted-foreground/15 rounded-lg"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="space-y-1.5">
-                      <Label className="text-xs font-semibold">Quantity</Label>
-                      <Input
-                        type="number"
-                        min="0"
-                        step="any"
-                        value={item.quantity}
-                        onChange={(e) => handleUpdateItem(item.id, "quantity", e.target.value)}
-                        className="text-xs bg-background border-muted-foreground/15 rounded-lg"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-xs font-semibold">Unit Price</Label>
-                      <Input
-                        type="number"
-                        min="0"
-                        step="any"
-                        value={item.unitPrice}
-                        onChange={(e) => handleUpdateItem(item.id, "unitPrice", e.target.value)}
-                        className="text-xs bg-background border-muted-foreground/15 rounded-lg"
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-xs font-semibold">VAT / Moms (%)</Label>
-                      <select
-                        value={[25, 12, 6, 0].includes(item.vatRate) ? item.vatRate : "custom"}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          if (val === "custom") {
-                            handleUpdateItem(item.id, "vatRate", 15); // default custom VAT is 15%
-                          } else {
-                            handleUpdateItem(item.id, "vatRate", Number(val));
-                          }
-                        }}
-                        className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-background px-3 py-1 text-xs"
-                      >
-                        <option value={25}>25% (Standard)</option>
-                        <option value={12}>12% (Food/Services)</option>
-                        <option value={6}>6% (Books/Travel)</option>
-                        <option value={0}>0% (Exempt)</option>
-                        <option value="custom">Custom...</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {![25, 12, 6, 0].includes(item.vatRate) && (
-                    <div className="space-y-1.5 pt-1.5 border-t border-border/40 mt-1">
-                      <Label className="text-xs font-semibold text-emerald-600">Specify Custom VAT (%)</Label>
-                      <Input
-                        type="number"
-                        min="0"
-                        max="100"
-                        step="any"
-                        value={item.vatRate}
-                        onChange={(e) => handleUpdateItem(item.id, "vatRate", e.target.value)}
-                        className="text-xs bg-background border-muted-foreground/15 rounded-lg w-full max-w-[120px]"
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Payment Terms & Bank details */}
-          <div className="rounded-xl border border-border/50 bg-card p-5 space-y-4 shadow-sm">
-            <h3 className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <Icon name="CreditCard" size={14} className="text-emerald-500" />
-              Banking & Payment Terms
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="bank-bg" className="text-xs font-semibold">Bankgiro / Routing No</Label>
-                <Input
-                  id="bank-bg"
-                  value={bankgiro}
-                  onChange={(e) => setBankgiro(e.target.value)}
-                  placeholder="e.g. 123-4567 or Routing Code"
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="bank-pg" className="text-xs font-semibold">Plusgiro / Account No</Label>
-                <Input
-                  id="bank-pg"
-                  value={plusgiro}
-                  onChange={(e) => setPlusgiro(e.target.value)}
-                  placeholder="e.g. 987654-3 or Account Code"
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="bank-iban" className="text-xs font-semibold">IBAN</Label>
-                <Input
-                  id="bank-iban"
-                  value={iban}
-                  onChange={(e) => setIban(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="bank-bic" className="text-xs font-semibold">BIC / SWIFT</Label>
-                <Input
-                  id="bank-bic"
-                  value={bic}
-                  onChange={(e) => setBic(e.target.value)}
-                  className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                />
-              </div>
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="payment-interest" className="text-xs font-semibold">Late Payment Interest Rate (%)</Label>
-              <Input
-                id="payment-interest"
-                value={lateInterest}
-                onChange={(e) => setLateInterest(e.target.value)}
-                placeholder="e.g. 8"
-                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-              />
-            </div>
-            {/* Scan-to-Pay QR Code Configurations */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-border/40 pt-4 mt-2">
-              <div className="space-y-1.5">
-                <Label htmlFor="qr-type" className="text-xs font-semibold text-emerald-600">Scan-to-Pay QR Code (Optional)</Label>
-                <select
-                  id="qr-type"
-                  value={qrType}
-                  onChange={(e) => setQrType(e.target.value as any)}
-                  className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-muted/20 px-3 py-1.5 text-xs focus-visible:ring-emerald-500"
-                >
-                  <option value="none">No QR Code</option>
-                  <option value="swish">Swish QR (Sweden)</option>
-                  <option value="paypal">PayPal QR</option>
-                  <option value="url">Custom Payment Link QR</option>
-                </select>
-              </div>
-
-              {qrType !== "none" && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="qr-value" className="text-xs font-semibold text-emerald-600">
-                    {qrType === "swish"
-                      ? "Swish Number (phone/company)"
-                      : qrType === "paypal"
-                      ? "PayPal Username"
-                      : "Payment Link / URL"}
-                  </Label>
-                  <Input
-                    id="qr-value"
-                    value={qrValue}
-                    onChange={(e) => setQrValue(e.target.value)}
-                    placeholder={
-                      qrType === "swish"
-                        ? "e.g. 1234567890"
-                        : qrType === "paypal"
-                        ? "e.g. myusername"
-                        : "https://example.com/pay"
-                    }
-                    className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-                  />
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="invoice-footer-note" className="text-xs font-semibold">Invoice Footer Text (Thank You note)</Label>
-              <Input
-                id="invoice-footer-note"
-                value={footerNote}
-                onChange={(e) => setFooterNote(e.target.value)}
-                placeholder="e.g. Thank you for your business!"
-                className="text-xs bg-muted/20 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
-              />
-            </div>
-          </div>
-
-        </div>
+        <InvoiceEditor
+          logo={logo}
+          handleLogoChange={handleLogoChange}
+          handleClearLogo={handleClearLogo}
+          sellerName={sellerName}
+          setSellerName={setSellerName}
+          sellerAddress={sellerAddress}
+          setSellerAddress={setSellerAddress}
+          sellerRegNo={sellerRegNo}
+          setSellerRegNo={setSellerRegNo}
+          sellerVat={sellerVat}
+          setSellerVat={setSellerVat}
+          hasFskatt={hasFskatt}
+          setHasFskatt={setHasFskatt}
+          fskattText={fskattText}
+          setFskattText={setFskattText}
+          buyerName={buyerName}
+          setBuyerName={setBuyerName}
+          buyerAddress={buyerAddress}
+          setBuyerAddress={setBuyerAddress}
+          buyerRef={buyerRef}
+          setBuyerRef={setBuyerRef}
+          invoiceNumber={invoiceNumber}
+          setInvoiceNumber={setInvoiceNumber}
+          currency={currency}
+          setCurrency={setCurrency}
+          currencies={CURRENCIES}
+          docLang={docLang}
+          handleLangChange={handleLangChange}
+          issueDate={issueDate}
+          setIssueDate={setIssueDate}
+          deliveryDate={deliveryDate}
+          setDeliveryDate={setDeliveryDate}
+          dueDate={dueDate}
+          setDueDate={setDueDate}
+          lineItems={lineItems}
+          handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
+          handleUpdateItem={handleUpdateItem}
+          bankgiro={bankgiro}
+          setBankgiro={setBankgiro}
+          plusgiro={plusgiro}
+          setPlusgiro={setPlusgiro}
+          iban={iban}
+          setIban={setIban}
+          bic={bic}
+          setBic={setBic}
+          lateInterest={lateInterest}
+          setLateInterest={setLateInterest}
+          qrType={qrType}
+          setQrType={setQrType}
+          qrValue={qrValue}
+          setQrValue={setQrValue}
+          footerNote={footerNote}
+          setFooterNote={setFooterNote}
+          activeTab={activeTab}
+          layoutMode={layoutMode}
+        />
 
         {/* Right Side: Professional Invoice Preview (Printable area) */}
-        <div
-          className={`${
-            layoutMode === "tabs" ? "lg:col-span-12" : "lg:col-span-6"
-          } ${
-            activeTab === "preview" ? "block" : (layoutMode === "tabs" ? "hidden" : "hidden lg:block")
-          }`}
-        >
-          <div className="sticky top-20">
-            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-1.5 no-print">
-              <Icon name="Eye" size={14} className="text-emerald-500" />
-              Live Invoice Layout Preview (A4 Formatted)
-            </h3>
-
-            {/* Simulated Paper A4 Document */}
-            <div
-              id="invoice-printable-container"
-              className="bg-white text-slate-800 border border-slate-200 shadow-xl rounded-xl p-8 sm:p-12 font-sans w-full min-h-[842px] text-xs leading-relaxed space-y-8 flex flex-col justify-between"
-              style={{ colorScheme: "light" }}
-            >
-              <div className="space-y-8">
-                {/* Header Row: Company Logo & Title */}
-                <div className="flex justify-between items-start border-b border-slate-100 pb-6">
-                  <div>
-                    {logo ? (
-                      <img src={logo} alt={sellerName} className="h-12 max-w-[200px] object-contain mb-3" />
-                    ) : (
-                      <div className="h-10 w-10 bg-slate-900 rounded-lg flex items-center justify-center text-white font-extrabold text-lg mb-2">
-                        {sellerName.charAt(0)}
-                      </div>
-                    )}
-                    <h2 className="text-base font-bold text-slate-900">{sellerName}</h2>
-                    <p className="text-[10px] text-slate-500 whitespace-pre-line mt-1">{sellerAddress}</p>
-                    {sellerRegNo && (
-                      <p className="text-[10px] text-slate-500 mt-1">{t.regNo}: {sellerRegNo}</p>
-                    )}
-                    {sellerVat && (
-                      <p className="text-[10px] text-slate-500">{t.vatNo}: {sellerVat}</p>
-                    )}
-                  </div>
-
-                  <div className="text-right">
-                    <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 uppercase">
-                      {t.invoice}
-                    </h1>
-                    <div className="mt-3 space-y-1 font-medium text-slate-700">
-                      <div>
-                        <span className="text-slate-400 font-normal">{t.invoiceNo}:</span> {invoiceNumber}
-                      </div>
-                      <div>
-                        <span className="text-slate-400 font-normal">{t.issueDate}:</span> {issueDate}
-                      </div>
-                      <div>
-                        <span className="text-slate-400 font-normal">{t.dueDate}:</span> {dueDate}
-                      </div>
-                      {deliveryDate && (
-                        <div>
-                          <span className="text-slate-400 font-normal">{t.deliveryDate}:</span> {deliveryDate}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Client / Buyer info Block */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <span className="text-[9px] font-bold text-slate-400 uppercase block mb-1">
-                      {t.invoiceTo}
-                    </span>
-                    <div className="font-bold text-slate-900 text-[11px]">{buyerName}</div>
-                    <div className="text-[10px] text-slate-600 whitespace-pre-line mt-1">
-                      {buyerAddress}
-                    </div>
-                  </div>
-
-                  <div className="p-4 flex flex-col justify-between">
-                    <div>
-                      {buyerRef && (
-                        <div>
-                          <span className="text-slate-400">{t.ourReference}:</span>{" "}
-                          <span className="font-semibold text-slate-800">{buyerRef}</span>
-                        </div>
-                      )}
-                      <div>
-                        <span className="text-slate-400">{t.currency}:</span>{" "}
-                        <span className="font-semibold text-slate-800">{currency}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Services / Goods Table */}
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b-2 border-slate-200 text-slate-400 text-[9px] uppercase tracking-wider font-bold">
-                      <th className="py-2.5">{t.description}</th>
-                      <th className="py-2.5 text-center w-16">{t.qty}</th>
-                      <th className="py-2.5 text-right w-24">{t.unitPrice}</th>
-                      <th className="py-2.5 text-center w-16">{t.vatPercent}</th>
-                      <th className="py-2.5 text-right w-24">{t.total}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lineItems.map((item) => {
-                      const totalCost = item.quantity * item.unitPrice;
-                      return (
-                        <tr key={item.id} className="border-b border-slate-100 text-slate-700 text-[10px]">
-                          <td className="py-3 font-semibold text-slate-900">{item.description}</td>
-                          <td className="py-3 text-center">{item.quantity}</td>
-                          <td className="py-3 text-right">
-                            {item.unitPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                          </td>
-                          <td className="py-3 text-center">{item.vatRate}%</td>
-                          <td className="py-3 text-right font-semibold text-slate-900">
-                            {totalCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-
-                {/* Subtotals & Taxes breakdown */}
-                <div className="flex justify-end pt-4">
-                  <div className="w-64 space-y-2 border-t border-slate-100 pt-4">
-                    <div className="flex justify-between text-slate-600">
-                      <span>{t.subtotal}</span>
-                      <span className="font-semibold">
-                        {calculatedTotals.subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
-                      </span>
-                    </div>
-
-                    {/* Show VAT rate breakdown */}
-                    {Object.entries(calculatedTotals.vatAmounts).map(([rate, amount]) => {
-                      if (amount === 0) return null;
-                      return (
-                        <div key={rate} className="flex justify-between text-slate-500 text-[9px]">
-                          <span>{t.vatAmount} ({rate}%)</span>
-                          <span>
-                            {amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
-                          </span>
-                        </div>
-                      );
-                    })}
-
-                    <div className="flex justify-between text-slate-600 border-b border-slate-100 pb-2">
-                      <span>{t.totalVat}</span>
-                      <span>
-                        {calculatedTotals.totalVat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between text-slate-900 text-sm font-extrabold pt-1">
-                      <span>{t.totalDue}</span>
-                      <span className="text-emerald-700">
-                        {calculatedTotals.grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {currency}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Document Footer: Payment parameters and F-skatt status */}
-              <div className="border-t border-slate-100 pt-6 mt-8 space-y-4">
-                <div className="flex justify-between items-end gap-4">
-                  {/* Payments Grid */}
-                  <div className={`grid gap-4 flex-1 text-[9px] text-slate-500 ${
-                    paymentColumnsCount === 3 ? "grid-cols-3" :
-                    paymentColumnsCount === 2 ? "grid-cols-2" : "grid-cols-1"
-                  }`}>
-                    {/* Swedish Bankgiro/Plusgiro details */}
-                    {(bankgiro || plusgiro) && (
-                      <div>
-                        <span className="font-bold text-slate-700 block uppercase mb-1">
-                          {t.localPayments}
-                        </span>
-                        {bankgiro && <div>{t.bankgiro}: <span className="font-semibold text-slate-700">{bankgiro}</span></div>}
-                        {plusgiro && <div>{t.plusgiro}: <span className="font-semibold text-slate-700">{plusgiro}</span></div>}
-                      </div>
-                    )}
-
-                    {/* International Bank details */}
-                    {(iban || bic) && (
-                      <div>
-                        <span className="font-bold text-slate-700 block uppercase mb-1">
-                          {t.internationalPayments}
-                        </span>
-                        {iban && <div className="truncate">{t.iban}: <span className="font-semibold text-slate-700">{iban}</span></div>}
-                        {bic && <div>{t.bicSwift}: <span className="font-semibold text-slate-700">{bic}</span></div>}
-                      </div>
-                    )}
-
-                    {/* Terms and F-skatt note */}
-                    {(lateInterest || (hasFskatt && fskattText)) && (
-                      <div>
-                        <span className="font-bold text-slate-700 block uppercase mb-1">
-                          {t.invoicingTerms}
-                        </span>
-                        {lateInterest && (
-                          <div>{t.overdueInterest}: <span className="font-semibold text-slate-700">{lateInterest}%</span></div>
-                        )}
-                        {hasFskatt && fskattText && (
-                          <div className="mt-1 font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded inline-block">
-                            {fskattText}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* QR Code Container */}
-                  {qrCodeUrl && (
-                    <div className="flex flex-col items-center justify-center p-1.5 border border-slate-100 rounded-lg bg-slate-50 text-center w-20 flex-shrink-0">
-                      <img
-                        src={qrCodeUrl}
-                        alt="Scan to Pay"
-                        className="h-14 w-14 object-contain"
-                      />
-                      <span className="text-[6px] font-bold text-slate-400 uppercase tracking-wider mt-1 block">
-                        {qrType === "swish" ? "Scan to Swish" : "Scan to Pay"}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="text-center text-[9px] text-slate-400 border-t border-slate-50 pt-3">
-                  {footerNote}
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        <InvoicePreview
+          logo={logo}
+          sellerName={sellerName}
+          sellerAddress={sellerAddress}
+          sellerRegNo={sellerRegNo}
+          sellerVat={sellerVat}
+          invoiceNumber={invoiceNumber}
+          issueDate={issueDate}
+          dueDate={dueDate}
+          deliveryDate={deliveryDate}
+          buyerName={buyerName}
+          buyerAddress={buyerAddress}
+          buyerRef={buyerRef}
+          currency={currency}
+          lineItems={lineItems}
+          calculatedTotals={calculatedTotals}
+          bankgiro={bankgiro}
+          plusgiro={plusgiro}
+          iban={iban}
+          bic={bic}
+          lateInterest={lateInterest}
+          hasFskatt={hasFskatt}
+          fskattText={fskattText}
+          footerNote={footerNote}
+          qrCodeUrl={qrCodeUrl}
+          qrType={qrType}
+          paymentColumnsCount={paymentColumnsCount}
+          t={t}
+          layoutMode={layoutMode}
+          activeTab={activeTab}
+        />
       </div>
     </div>
   );
