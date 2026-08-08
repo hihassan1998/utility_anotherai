@@ -1,0 +1,23 @@
+# AnotherAI Utility Tools
+
+A comprehensive platform of free, private, browser-based developer and utility tools. None of the user data is stored on servers; all calculations, conversions, and file processing happen 100% locally in the browser.
+
+## Root URL
+https://anotheraiplatform.com
+
+## Available Tools
+
+- [/invoice](https://anotheraiplatform.com/invoice): **Free Invoice Generator**. Create, preview, and download professional PDF invoices instantly. Fully supports Swedish (F-skatt, Moms/VAT, Bankgiro/Plusgiro) and General/International markets, complete with Swish QR pay code generator.
+- [/word-counter](https://anotheraiplatform.com/word-counter): **Word Counter**. Real-time word, character, sentence, and paragraph counters, supporting emoji count and reading/speaking times.
+- [/character-counter](https://anotheraiplatform.com/character-counter): **Character Counter**. Count characters and words with real-time text analysis.
+- [/percentage-calculator](https://anotheraiplatform.com/percentage-calculator): **Percentage Calculator**. Calculate percentage increases, decreases, ratios, and fractions.
+- [/bmi-calculator](https://anotheraiplatform.com/bmi-calculator): **BMI Calculator**. Calculate Body Mass Index under Metric and Imperial units.
+- [/age-calculator](https://anotheraiplatform.com/age-calculator): **Age Calculator**. Calculate age, intervals, and leap year details.
+- [/date-duration-calculator](https://anotheraiplatform.com/date-duration-calculator): **Date Duration Calculator**. Calculate duration between two dates.
+- [/unit-converter](https://anotheraiplatform.com/unit-converter): **Unit Converter**. Convert length, weight, area, volume, temperature, and speed.
+
+## Features & Compliance
+- **100% Client-Side**: Safe, secure, and privacy-first.
+- **Sweden Invoicing Compliance**: Moms rates (25%, 12%, 6%), F-skatt status statement, Bankgiro, and customer reference codes.
+- **A4 Layout Printing**: Print-ready custom CSS stylesheets.
+- **Multilingual Invoicing**: Supports English, Svenska, Deutsch, Français, Español, 中文 (Chinese), हिन्दी (Hindi), Português, and العربية (Arabic).
