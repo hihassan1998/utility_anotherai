@@ -348,4 +348,5 @@ URL:
 - [x] Vercel Analytics integrated
 - [x] Vercel Speed Insights integrated
 - [x] Google AdSense verification code implemented globally
+- [x] Google AdSense ads.txt configured and verified
 - [x] Open Graph preview image set up
