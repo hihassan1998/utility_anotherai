@@ -213,12 +213,12 @@ export const siteConfig = {
     },
     {
       id: "invoice",
-      name: "Invoice Creator",
+      name: "Free Invoice Generator",
       href: "/invoice",
       iconName: "FileSpreadsheet",
-      description: "Create professional, print-ready invoices for the general and Swedish markets with live A4 preview.",
-      longDescription: "Our free, private Invoice Creator helps you build, preview, and download professional corporate invoices entirely in your browser. Fully compliant with both general standards and Swedish invoicing requirements (F-skatt, VAT/Moms rates, Bankgiro, and customer reference number). Upload a company logo, enter line items with flexible VAT settings, and generate a print-friendly A4 PDF document in seconds.",
-      keywords: ["Invoice Creator", "Free Invoice Generator", "Swedish Invoice Maker", "F-skatt Invoice", "Moms Calculator", "Bankgiro Invoice Template"],
+      description: "Free online invoice generator to create and download professional PDF invoices instantly. Swedish & General market compatible.",
+      longDescription: "Our Free Invoice Generator helps you build, preview, and download professional corporate invoices entirely in your browser. Fully compliant with both general standards and Swedish invoicing requirements (F-skatt, VAT/Moms rates, Bankgiro, and customer reference number). Upload a company logo, enter line items with custom VAT/Moms percentages, and generate a print-friendly A4 PDF document in seconds.",
+      keywords: ["Free Invoice Generator", "Invoice Generator", "Invoice Maker", "Create Invoice Online", "Swedish Invoice Maker", "F-skatt Invoice", "Moms Calculator", "Bankgiro Invoice Template"],
       examples: [
         "Generate a general business invoice with custom logo, subtotal, and tax breakdowns.",
         "Create a Swedish market invoice specifying 'Godkänd för F-skatt' and Bankgiro details.",
@@ -226,7 +226,7 @@ export const siteConfig = {
       ],
       faqs: [
         {
-          question: "Can I use this invoice creator for the Swedish market?",
+          question: "Can I use this invoice generator for the Swedish market?",
           answer: "Yes. Our tool is optimized for Sweden, providing designated fields for F-skattsedel registration status ('Godkänd för F-skatt'), Moms (VAT) rates (25%, 12%, and 6%), Moms amounts in SEK, customer references (referensnummer), and Bankgiro/Plusgiro payment methods."
         },
         {
