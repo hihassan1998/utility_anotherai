@@ -13,6 +13,7 @@ export interface Tool {
 export const siteConfig = {
   name: "AnoTool",
   url: "https://anotool.com",
+  googleAdSenseClientId: "ca-pub-7189074176587143",
   description: "Free online utility tools for calculation, conversion, health, and productivity. SEO-optimized, fast, and accessible.",
   mainNav: [
     { title: "Home", href: "/" },
