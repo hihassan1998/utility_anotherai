@@ -154,6 +154,62 @@ export const siteConfig = {
           answer: "Yes, our tool converts between Celsius, Fahrenheit, and Kelvin, accounting for the offset formulas (e.g., F = C * 1.8 + 32)."
         }
       ]
+    },
+    {
+      id: "word-counter",
+      name: "Word Counter",
+      href: "/word-counter",
+      iconName: "FileText",
+      description: "Free online word counter to count words, characters, sentences, paragraphs, and estimate reading time in real-time.",
+      longDescription: "Count words, characters (with and without spaces), sentences, paragraphs, and unique words instantly with our free Word Counter tool. Perfect for essays, blog posts, social media posts, and professional copy. Features real-time calculation, keyword density analysis, reading and speaking time estimates, and text case transformation tools.",
+      keywords: ["Word Counter", "Count Words Online", "Word Count Tool", "Reading Time Calculator", "Text Statistics"],
+      examples: [
+        "Check word count for essays, blog posts, and articles.",
+        "Calculate estimated reading time (200 wpm) and speaking time (130 wpm).",
+        "Analyze top keyword density and unique word count in your text."
+      ],
+      faqs: [
+        {
+          question: "How does the Word Counter handle hyphenated words or extra spaces?",
+          answer: "Hyphenated words like 'well-known' are counted according to standard grammar rules, and multiple spaces or line breaks are normalized so your word count remains accurate."
+        },
+        {
+          question: "Is my pasted text stored or saved anywhere?",
+          answer: "No. All word counting and text analysis happen locally in your web browser. Your text is private and never uploaded to any server."
+        },
+        {
+          question: "How are reading and speaking times calculated?",
+          answer: "Reading time is calculated using an average reading speed of 200 words per minute (wpm), while speaking time uses an average speaking speed of 130 words per minute."
+        }
+      ]
+    },
+    {
+      id: "character-counter",
+      name: "Character Counter",
+      href: "/character-counter",
+      iconName: "Hash",
+      description: "Count characters, letters, numbers, spaces, and track social media character limits live.",
+      longDescription: "Track your character counts in real-time with character limit meters for Twitter/X, SMS, Meta SEO titles, Meta descriptions, and LinkedIn posts. View detailed breakdowns for letters, digits, whitespace, line breaks, and special symbols.",
+      keywords: ["Character Counter", "Letter Counter", "Twitter Character Counter", "SEO Title Character Count", "SMS Length Counter"],
+      examples: [
+        "Check character count for Twitter / X posts (280 character limit).",
+        "Verify SEO Meta Title (60 characters) and Meta Description (160 characters) limits.",
+        "Count exact characters with and without spaces for legal or academic documents."
+      ],
+      faqs: [
+        {
+          question: "Does the Character Counter count spaces and line breaks?",
+          answer: "Yes, our tool shows both total characters (including spaces and line breaks) and character count excluding spaces."
+        },
+        {
+          question: "What social media character limits are supported?",
+          answer: "We provide live progress bars for Twitter / X (280 characters), SMS text messages (160 characters), Google SEO Titles (60 characters), Meta Descriptions (160 characters), and LinkedIn posts (3,000 characters)."
+        },
+        {
+          question: "Are emojis counted properly?",
+          answer: "Yes, Unicode emojis and special symbols are correctly processed and included in character counts."
+        }
+      ]
     }
   ] as Tool[]
 };
