@@ -258,6 +258,16 @@ export function InvoiceCreatorClient() {
             .w-16 { width: 4rem; }
             .w-24 { width: 6rem; }
             .w-64 { width: 16rem; }
+            
+            /* Print adjustments */
+            #invoice-printable-container {
+              width: 100%;
+              min-height: 255mm;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              box-sizing: border-box;
+            }
           </style>
         </head>
         <body>
@@ -646,17 +656,40 @@ export function InvoiceCreatorClient() {
                     <div className="space-y-1.5">
                       <Label className="text-xs font-semibold">VAT / Moms (%)</Label>
                       <select
-                        value={item.vatRate}
-                        onChange={(e) => handleUpdateItem(item.id, "vatRate", e.target.value)}
+                        value={[25, 12, 6, 0].includes(item.vatRate) ? item.vatRate : "custom"}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (val === "custom") {
+                            handleUpdateItem(item.id, "vatRate", 15); // default custom VAT is 15%
+                          } else {
+                            handleUpdateItem(item.id, "vatRate", Number(val));
+                          }
+                        }}
                         className="flex h-9 w-full rounded-lg border border-muted-foreground/15 bg-background px-3 py-1 text-xs"
                       >
                         <option value={25}>25% (Standard)</option>
                         <option value={12}>12% (Food/Services)</option>
                         <option value={6}>6% (Books/Travel)</option>
                         <option value={0}>0% (Exempt)</option>
+                        <option value="custom">Custom...</option>
                       </select>
                     </div>
                   </div>
+
+                  {![25, 12, 6, 0].includes(item.vatRate) && (
+                    <div className="space-y-1.5 pt-1.5 border-t border-border/40 mt-1">
+                      <Label className="text-xs font-semibold text-emerald-600">Specify Custom VAT (%)</Label>
+                      <Input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="any"
+                        value={item.vatRate}
+                        onChange={(e) => handleUpdateItem(item.id, "vatRate", e.target.value)}
+                        className="text-xs bg-background border-muted-foreground/15 rounded-lg w-full max-w-[120px]"
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
