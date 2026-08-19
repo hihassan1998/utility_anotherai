@@ -2,6 +2,8 @@
 
 **AnoTool** is a modern, light-speed, and privacy-focused online utility tools platform developed by [anotherAI](https://anotheraiplatform.com) for public use. 
 
+Live Website: [anotool.com](https://anotool.com)
+
 Calculations, conversions, and inputs run 100% locally in the browser, ensuring full user privacy with no backend data collection.
 
 ---
@@ -16,6 +18,7 @@ Calculations, conversions, and inputs run 100% locally in the browser, ensuring 
 *   **Date Duration Calculator**: Compute duration between two calendar dates in years, months, weeks, days, hours, and minutes.
 *   **Percentage Calculator**: Instantly calculate equations, discount percentages, and value increase/decrease metrics.
 *   **Unit Converter**: Multi-category conversion supporting Length, Weight, Temperature, Area, Volume, Speed, and Time units.
+*   **Days Until Calculator**: Calculate the remaining days, hours, and minutes to custom events, holidays, or milestones with our free, privacy-first countdown tool.
 *   **Built-in SEO & FAQ Systems**: Implements JSON-LD breadcrumb and FAQ page schema tags on every route to trigger Google rich snippets automatically.
 *   **No-Marketing Growth Loops**: Easy share-to-clipboard buttons on results containers generating custom status text for referral loops.
 
@@ -73,3 +76,4 @@ AnoTool is structured to let you deploy new tools in minutes:
       );
     }
     ```
+4.  **Create Guide Article**: Create a guide configuration file under `src/config/guides/[tool-id].ts` containing high-value use cases, scenarios, and FAQs. Import and register it inside [src/config/guides/index.ts](file:///d:/AntigravityProjects/utility_anotherai/src/config/guides/index.ts). The central `ToolLayout` will automatically link the calculator and guide pages bidirectionally to form a powerful internal linking web for search engines.

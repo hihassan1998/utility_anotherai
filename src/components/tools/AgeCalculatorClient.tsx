@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Icon } from "@/components/Icon";
+import { DatePickerWithInput } from "@/components/DatePickerWithInput";
 
 export function AgeCalculatorClient() {
   const [birthDate, setBirthDate] = React.useState("");
@@ -25,6 +26,10 @@ export function AgeCalculatorClient() {
     if (!birthDate) return;
 
     const dob = new Date(birthDate);
+    if (isNaN(dob.getTime())) {
+      alert("Please enter a valid birth date!");
+      return;
+    }
     const today = new Date();
 
     if (dob > today) {
@@ -95,16 +100,15 @@ export function AgeCalculatorClient() {
           <Label htmlFor="dob" className="text-sm font-semibold">
             Select Your Date of Birth
           </Label>
-          <div className="flex gap-3">
-            <Input
+          <div className="flex gap-4 items-end flex-wrap sm:flex-nowrap w-full">
+            <DatePickerWithInput
               id="dob"
-              type="date"
               required
               value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              className="bg-muted/30 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500 flex-1"
+              onChange={setBirthDate}
+              className="flex-1"
             />
-            <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-6">
+            <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-6 h-10">
               Calculate Age
             </Button>
           </div>

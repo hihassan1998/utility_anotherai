@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
+import { guides } from "@/config/guides";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
@@ -25,5 +26,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticUrls, ...toolUrls];
+  const guideUrls = Object.keys(guides).map((slug) => ({
+    url: `${baseUrl}/guides/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticUrls, ...toolUrls, ...guideUrls];
 }

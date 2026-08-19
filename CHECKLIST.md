@@ -209,7 +209,7 @@ URL:
 - [ ] Contact page
 - [ ] Privacy Policy
 - [ ] Terms of Service
-- [ ] Useful original content
+- [x] Useful original content
 - [ ] No broken pages
 - [ ] Mobile-friendly
 - [ ] Advertisement component architecture ready
@@ -340,6 +340,28 @@ URL:
 - [x] Internal links
 - [x] Sitemap inclusion verified
 - [x] Production deployment verified
+
+## Days Until Calculator
+
+URL:
+
+/days-until-calculator
+
+- [ ] Tool implemented
+- [ ] Calculation/function tested
+- [ ] Edge cases tested
+- [ ] Mobile tested
+- [ ] Accessibility checked
+- [ ] Unique title
+- [ ] Unique meta description
+- [ ] H1 exists
+- [ ] Explanation content
+- [ ] Examples
+- [ ] FAQs
+- [ ] Related tools
+- [ ] Internal links
+- [ ] Sitemap inclusion verified
+- [ ] Production deployment verified
 
 ---
 

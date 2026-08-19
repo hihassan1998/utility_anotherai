@@ -34,25 +34,25 @@ export const siteConfig = {
       href: "/age-calculator",
       iconName: "Calendar",
       description: "Calculate your exact age in years, months, days, and countdown to your next birthday.",
-      longDescription: "Our free Age Calculator makes it easy to find your exact age. Enter your date of birth, and we'll calculate your age down to the years, months, and days. We also show your total days lived, days until your next birthday, and what day of the week you were born.",
+      longDescription: "Our Age Calculator provides an exact calendar-based age calculation. Enter your date of birth, and the tool computes your age down to the years, months, and days, compensating for different month lengths and leap years. It also calculates the total days you have lived, the day of the week you were born on, and a live countdown to your next birthday.",
       keywords: ["Age Calculator", "How old am I", "Birthday Calculator", "Calculate my age"],
       examples: [
-        "Find your age in exact years, months, and days.",
-        "Calculate total days lived since birth.",
-        "See a live countdown in days, hours, and minutes to your next birthday."
+        "Calculate your exact age in years, months, and days relative to today's date.",
+        "Determine the day of the week you were born (e.g., Monday, Wednesday).",
+        "Count the total days you have been alive since birth, accounting for leap years."
       ],
       faqs: [
         {
-          question: "How does the Age Calculator work?",
-          answer: "It takes your date of birth and compares it with the current date, accounting for leap years and the varying number of days in different months, to give an exact breakdown of your age."
+          question: "How does the Age Calculator compute the days and months?",
+          answer: "The calculator compares your birthdate to the current date. If the current day of the month is less than your birthday, it rolls back the month count by one and adds the total number of days in the previous month. Similarly, if the current month is less than your birth month, it rolls back the year."
         },
         {
-          question: "Is my personal birthdate data stored or saved?",
-          answer: "No. All calculations are performed directly on your device inside the web browser. We do not store or transmit any personal data."
+          question: "Does the total days calculation account for leap years?",
+          answer: "Yes. The total days lived is calculated by taking the absolute millisecond difference between your birthdate and the current date, then dividing by 86,400,000 milliseconds (one full day), which automatically captures the extra 366th day of every leap year."
         },
         {
-          question: "Does the calculator account for leap years?",
-          answer: "Yes, leap years (which have 366 days instead of 365) are fully accounted for in all calculations of total days lived and time difference."
+          question: "Is my birthdate data private?",
+          answer: "Yes. All calculations are executed client-side in your browser via local JavaScript. We do not store, track, or upload your birthdate to any external servers."
         }
       ]
     },
@@ -62,25 +62,25 @@ export const siteConfig = {
       href: "/bmi-calculator",
       iconName: "Activity",
       description: "Calculate Body Mass Index (BMI) for adults using metric or imperial units.",
-      longDescription: "Use this free BMI Calculator to compute your Body Mass Index (BMI) and determine if you are in a healthy weight category. It supports both metric (kilograms and centimeters) and imperial (pounds, feet, and inches) systems for adults.",
+      longDescription: "Use this Body Mass Index (BMI) Calculator to compute weight-to-height ratios for adults. It supports both metric (kilograms and centimeters) and imperial (pounds, feet, and inches) systems. The tool maps your BMI to standard weight ranges (Underweight, Healthy, Overweight, Obese) and calculates your target healthy weight bounds. Note: BMI is a general statistical screening tool and is not a medical diagnosis.",
       keywords: ["BMI Calculator", "Body Mass Index Calculator", "Healthy BMI"],
       examples: [
-        "Calculate BMI using imperial units (feet, inches, pounds).",
-        "Calculate BMI using metric units (centimeters, kilograms).",
-        "Find your healthy weight range based on height."
+        "Compute metric BMI using kilograms and height in centimeters.",
+        "Compute imperial BMI using pounds and height in feet and inches.",
+        "Determine the healthy weight range for your specific height."
       ],
       faqs: [
         {
-          question: "What is BMI?",
-          answer: "Body Mass Index (BMI) is a simple measurement of a person's weight relative to their height. It is used to classify adults as underweight, normal weight, overweight, or obese."
+          question: "What formulas are used to calculate BMI?",
+          answer: "For metric units, the formula is: BMI = weight (kg) / (height (m) * height (m)). For imperial units, it converts height to meters (1 inch = 0.0254 m) and weight to kilograms (1 lb = 0.45359237 kg), then applies the same metric formula."
         },
         {
-          question: "What is a healthy BMI range?",
-          answer: "According to the World Health Organization (WHO), a healthy BMI range for adults is between 18.5 and 24.9."
+          question: "What are the standard BMI weight categories?",
+          answer: "Underweight: BMI less than 18.5. Healthy Weight: BMI between 18.5 and 24.9. Overweight: BMI between 25 and 29.9. Obesity: BMI of 30 or greater."
         },
         {
-          question: "Does BMI apply to everyone?",
-          answer: "BMI is a general guide. It might not be accurate for athletes, pregnant women, or bodybuilders, as it does not distinguish between muscle mass and fat mass."
+          question: "What are the limitations of BMI?",
+          answer: "BMI does not distinguish between muscle mass and body fat. Consequently, bodybuilders or athletes with high muscle mass may have an 'overweight' or 'obese' BMI score despite being healthy. It is also not a diagnostic tool and does not apply to pregnant women, growing children, or the elderly."
         }
       ]
     },
@@ -90,21 +90,21 @@ export const siteConfig = {
       href: "/date-duration-calculator",
       iconName: "Clock",
       description: "Calculate the exact difference (duration) between two dates in years, months, weeks, and days.",
-      longDescription: "Calculate the duration, number of days, weeks, months, or years between any two dates. This tool is perfect for project planning, tracking milestones, or figuring out how long ago an event occurred.",
+      longDescription: "Calculate the duration, number of days, weeks, months, or years between two calendar dates. This tool handles historical dates, project milestones, and project planning. It features an option to include the end date in the final count, representing a full inclusive range.",
       keywords: ["Date Duration Calculator", "Days Between Dates", "Date Difference"],
       examples: [
-        "Calculate total days between today and a future deadline.",
-        "Compute exact difference in years, months, and days between two historic dates.",
-        "Include or exclude the start/end date in the total duration."
+        "Find the total days between two project milestones.",
+        "Get a complete breakdown of years, months, weeks, and days between historical dates.",
+        "Calculate work durations by choosing to include the end date."
       ],
       faqs: [
         {
-          question: "Can I include the end date in the calculation?",
-          answer: "Yes, our tool provides an option to include the end date (add 1 day) in the duration result if you are calculating work days or inclusive schedules."
+          question: "What does the 'Include End Date' option do?",
+          answer: "By default, duration calculations are exclusive of the end date (the difference between dates). Checking 'Include End Date' adds 1 day to the calculation, representing a fully inclusive time period (such as working schedules or event durations)."
         },
         {
-          question: "How many weeks are in the calculated duration?",
-          answer: "The duration difference is broken down into years, months, weeks, and days, so you can see exactly how many complete weeks are between the dates."
+          question: "How are months and years calculated when lengths vary?",
+          answer: "The tool performs calendar-based comparisons. If the end day of the month is smaller than the start day, the day difference is offset using the length of the previous month. This ensures an exact calendar representation rather than a static average."
         }
       ]
     },
@@ -114,21 +114,22 @@ export const siteConfig = {
       href: "/percentage-calculator",
       iconName: "Percent",
       description: "Quickly solve percentage equations, percentage increase/decrease, and discounts.",
-      longDescription: "A multi-purpose percentage calculator that answers standard percentage questions, computes percentage increases or decreases, and helps you find final prices using the built-in discount calculator.",
+      longDescription: "A multi-purpose percentage tool that calculates common percentage-based calculations: finding a percentage of a value, calculating what percentage a number is of another, computing percentage increase or decrease between two values, and solving discount final prices.",
       keywords: ["Percentage Calculator", "Percentage Increase", "Discount Calculator"],
       examples: [
-        "Calculate a percentage of a number (e.g., what is 15% of 80?).",
-        "Calculate percentage change (e.g., increase from 50 to 75).",
-        "Find the final price after a 20% discount on a $120 item."
+        "Determine a specific percentage of a total (e.g., 15% of $80 is $12).",
+        "Calculate the percentage ratio of two numbers (e.g., 20 is 25% of 80).",
+        "Find the percentage change between starting and ending values, such as growth rates.",
+        "Apply a discount percentage to find the final price and total savings."
       ],
       faqs: [
         {
-          question: "How do you calculate percentage increase?",
-          answer: "Subtract the original value from the new value, divide by the original value, and multiply by 100."
+          question: "What is the formula for percentage increase or decrease?",
+          answer: "To calculate percentage change: subtract the original value (X) from the new value (Y) to get the difference. Then divide the difference by the original value (X) and multiply by 100: Percentage Change = ((Y - X) / X) * 100. A positive result is an increase, and a negative result is a decrease."
         },
         {
-          question: "What is a discount calculator?",
-          answer: "It calculates the final price of an item after applying a percentage discount. It also shows the exact amount of money saved."
+          question: "How does the discount calculator work?",
+          answer: "It takes the original price and applies the formula: Saved Amount = Price * (Discount / 100). The final price is then calculated as: Final Price = Original Price - Saved Amount."
         }
       ]
     },
@@ -138,21 +139,21 @@ export const siteConfig = {
       href: "/unit-converter",
       iconName: "RefreshCw",
       description: "Convert units of length, weight, temperature, area, volume, speed, and time.",
-      longDescription: "Our comprehensive Unit Converter tool allows you to convert between metric and imperial units across multiple categories, including length, weight, temperature, area, volume, speed, and time.",
+      longDescription: "Convert values between metric and imperial systems across length, weight/mass, temperature, area, volume, speed, and time. The tool converts the input to a standardized base unit using standard international factors, and then converts it to the target unit for maximum precision.",
       keywords: ["Unit Converter", "Metric Converter", "Convert Units"],
       examples: [
-        "Convert lengths (e.g., meters to feet, miles to kilometers).",
-        "Convert temperatures (Celsius to Fahrenheit and vice versa).",
-        "Convert weights (e.g., kilograms to pounds, ounces to grams)."
+        "Convert length units: meters, kilometers, centimeters, miles, yards, feet, and inches.",
+        "Convert temperature units between Celsius, Fahrenheit, and Kelvin.",
+        "Convert volume units: liters, milliliters, gallons, quarts, pints, and cups."
       ],
       faqs: [
         {
-          question: "Is this converter up-to-date?",
-          answer: "Yes, all conversion factors follow international standard conversion constants (e.g., 1 inch = 2.54 cm)."
+          question: "How does the temperature converter calculate Celsius, Fahrenheit, and Kelvin?",
+          answer: "Conversions use exact offset formulas. For example, Fahrenheit to Celsius uses: C = (F - 32) * 5 / 9. Kelvin to Celsius uses: C = K - 273.15. Celsius to Fahrenheit uses: F = (C * 9 / 5) + 32. Kelvin conversions first convert to Celsius, then add 273.15."
         },
         {
-          question: "Can I convert temperature directly?",
-          answer: "Yes, our tool converts between Celsius, Fahrenheit, and Kelvin, accounting for the offset formulas (e.g., F = C * 1.8 + 32)."
+          question: "What average values are used for month and year conversions in the Time tab?",
+          answer: "Because month and year lengths vary, the converter uses standardized astronomical averages: an average month is defined as 30.4368 days (2,629,746 seconds) and an average year is defined as 365.2425 days (31,556,952 seconds), which accounts for leap years."
         }
       ]
     },
@@ -162,25 +163,21 @@ export const siteConfig = {
       href: "/word-counter",
       iconName: "FileText",
       description: "Free online word counter to count words, characters, sentences, paragraphs, and estimate reading time in real-time.",
-      longDescription: "Count words, characters (with and without spaces), sentences, paragraphs, and unique words instantly with our free Word Counter tool. Perfect for essays, blog posts, social media posts, and professional copy. Features real-time calculation, keyword density analysis, reading and speaking time estimates, and text case transformation tools.",
+      longDescription: "An online text analysis tool that counts words, characters (with and without spaces), sentences, and paragraphs in real-time. It estimates reading and speaking times based on word averages and analyzes keyword density to show your most frequent terms.",
       keywords: ["Word Counter", "Count Words Online", "Word Count Tool", "Reading Time Calculator", "Text Statistics"],
       examples: [
-        "Check word count for essays, blog posts, and articles.",
-        "Calculate estimated reading time (200 wpm) and speaking time (130 wpm).",
-        "Analyze top keyword density and unique word count in your text."
+        "Analyze word, character, sentence, and paragraph counts for essays or articles.",
+        "Get estimates for how long it takes to read or speak a piece of copy.",
+        "Identify the top 5 most frequently used words to optimize keyword density."
       ],
       faqs: [
         {
-          question: "How does the Word Counter handle hyphenated words or extra spaces?",
-          answer: "Hyphenated words like 'well-known' are counted according to standard grammar rules, and multiple spaces or line breaks are normalized so your word count remains accurate."
-        },
-        {
-          question: "Is my pasted text stored or saved anywhere?",
-          answer: "No. All word counting and text analysis happen locally in your web browser. Your text is private and never uploaded to any server."
+          question: "How are words, sentences, and paragraphs defined by the counter?",
+          answer: "Words are counted by splitting text on whitespace sequences. Characters are measured with and without spaces. Sentences are counted using regular expressions that look for punctuation marks (. ! ?) followed by spaces or the end of the text. Paragraphs are counted by splitting the text at line breaks."
         },
         {
           question: "How are reading and speaking times calculated?",
-          answer: "Reading time is calculated using an average reading speed of 200 words per minute (wpm), while speaking time uses an average speaking speed of 130 words per minute."
+          answer: "The tool uses standard speech and reading statistics: reading time is calculated using an average reading speed of 200 words per minute (WPM), and speaking time is calculated at an average speed of 130 words per minute."
         }
       ]
     },
@@ -190,25 +187,21 @@ export const siteConfig = {
       href: "/character-counter",
       iconName: "Hash",
       description: "Count characters, letters, numbers, spaces, and track social media character limits live.",
-      longDescription: "Track your character counts in real-time with character limit meters for Twitter/X, SMS, Meta SEO titles, Meta descriptions, and LinkedIn posts. View detailed breakdowns for letters, digits, whitespace, line breaks, and special symbols.",
+      longDescription: "Track character limits and counts in real-time. The tool monitors spaces, line breaks, digits, and special symbols, and provides live progress bars for common social media and SEO character limits (Twitter/X, SMS, Meta Titles, Meta Descriptions, and LinkedIn posts).",
       keywords: ["Character Counter", "Letter Counter", "Twitter Character Counter", "SEO Title Character Count", "SMS Length Counter"],
       examples: [
-        "Check character count for Twitter / X posts (280 character limit).",
-        "Verify SEO Meta Title (60 characters) and Meta Description (160 characters) limits.",
-        "Count exact characters with and without spaces for legal or academic documents."
+        "Monitor character limits for Twitter/X posts (280 characters max).",
+        "Check SEO Meta Title (60 characters) and Meta Description (160 characters) lengths.",
+        "Count exact letter, number, space, and symbol breakdowns in legal or academic drafts."
       ],
       faqs: [
         {
-          question: "Does the Character Counter count spaces and line breaks?",
-          answer: "Yes, our tool shows both total characters (including spaces and line breaks) and character count excluding spaces."
+          question: "What is the difference between total characters and characters without spaces?",
+          answer: "Total characters includes every letter, number, special symbol, space, tab, and line break. Characters without spaces strips all whitespace characters from the text before measuring the length."
         },
         {
-          question: "What social media character limits are supported?",
-          answer: "We provide live progress bars for Twitter / X (280 characters), SMS text messages (160 characters), Google SEO Titles (60 characters), Meta Descriptions (160 characters), and LinkedIn posts (3,000 characters)."
-        },
-        {
-          question: "Are emojis counted properly?",
-          answer: "Yes, Unicode emojis and special symbols are correctly processed and included in character counts."
+          question: "Are emojis counted as characters?",
+          answer: "Yes. In standard JavaScript, emojis are measured by their code unit length (usually 2 or more code units per emoji), which matches how modern platforms like Twitter/X and SMS analyze lengths."
         }
       ]
     },
@@ -218,25 +211,36 @@ export const siteConfig = {
       href: "/free-invoice-generator",
       iconName: "FileSpreadsheet",
       description: "Free online invoice generator to create and download professional PDF invoices instantly. Swedish & General market compatible.",
-      longDescription: "Our Free Invoice Generator helps you build, preview, and download professional corporate invoices entirely in your browser. Fully compliant with both general standards and Swedish invoicing requirements (F-skatt, VAT/Moms rates, Bankgiro, and customer reference number). Upload a company logo, enter line items with custom VAT/Moms percentages, and generate a print-friendly A4 PDF document in seconds.",
+      longDescription: "",
       keywords: ["Free Invoice Generator", "Invoice Generator", "Invoice Maker", "Create Invoice Online", "Swedish Invoice Maker", "F-skatt Invoice", "Moms Calculator", "Bankgiro Invoice Template"],
+      examples: [],
+      faqs: []
+    },
+    {
+      id: "days-until-calculator",
+      name: "Days Until Calculator",
+      href: "/days-until-calculator",
+      iconName: "Hourglass",
+      description: "Calculate the remaining days, hours, and minutes to custom events, holidays, or milestones with our free countdown tool.",
+      longDescription: "Calculate the exact time remaining until any upcoming date, holiday, or personal milestone. Choose from our list of popular presets like Christmas, New Year, or Halloween, or input your own custom event to see a live countdown breakdown in days, hours, minutes, and seconds.",
+      keywords: ["Days Until Calculator", "How many days until Christmas", "Custom Countdown Timer online", "Weeks until New Year", "Countdown Calculator"],
       examples: [
-        "Generate a general business invoice with custom logo, subtotal, and tax breakdowns.",
-        "Create a Swedish market invoice specifying 'Godkänd för F-skatt' and Bankgiro details.",
-        "Add multiple products or services with automatic VAT calculation (25%, 12%, 6%)."
+        "Find how many days are left until next Christmas or New Year's Day.",
+        "Set up a custom countdown for an upcoming wedding, exam, or retirement.",
+        "View a live time breakdown down to the exact second."
       ],
       faqs: [
         {
-          question: "Can I use this invoice generator for the Swedish market?",
-          answer: "Yes. Our tool is optimized for Sweden, providing designated fields for F-skattsedel registration status ('Godkänd för F-skatt'), Moms (VAT) rates (25%, 12%, and 6%), Moms amounts in SEK, customer references (referensnummer), and Bankgiro/Plusgiro payment methods."
+          question: "How does the Days Until Calculator compute the time remaining?",
+          answer: "The calculator takes your specified target date and time (adjusted for midnight in your local timezone) and subtracts the current system date and time. It converts this difference in milliseconds into days, hours, minutes, and seconds."
         },
         {
-          question: "How do I download or save my created invoice as a PDF?",
-          answer: "Click the 'Print / Download PDF' button. This will trigger your browser's native print interface where you can choose 'Save as PDF' as the destination. The print layout is specifically styled to hide the app layout, editor inputs, and margins for a perfectly formatted A4 document."
+          question: "Does the countdown account for timezone differences?",
+          answer: "All calculations are done locally using your browser's current timezone settings. The countdown matches when the event reaches midnight or your specified hour in your local timezone."
         },
         {
-          question: "Is my billing and client data stored on your servers?",
-          answer: "No. Privacy is our top priority. All invoice creation, logo image processing, and calculations happen 100% locally in your browser. None of your business, client, or financial information is uploaded or stored."
+          question: "Can I share my custom countdown with others?",
+          answer: "Yes. Once you configure a custom event title and target date, you can click the copy share button to copy the countdown summary text to your clipboard."
         }
       ]
     }

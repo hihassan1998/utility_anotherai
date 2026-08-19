@@ -80,9 +80,37 @@ export default function InvoiceCreatorPage() {
           </section>
 
           <section className="space-y-4">
-            <h3 className="text-lg font-bold text-foreground">Lighthouse, AEO, and GEO Optimization Standards</h3>
+            <h3 className="text-lg font-bold text-foreground">How to Create and Export Your Invoice</h3>
             <p className="text-sm leading-relaxed">
-              This free tool is built to follow the highest standards of accessibility (WCAG 2.1 AA compliant) and search engine indexing. Because all calculations and image uploads occur 100% locally inside your browser, none of your sensitive financial or client data is ever transmitted to external servers. This makes it a secure, privacy-first option for modern professionals worldwide.
+              Generating your invoice is quick and entirely browser-based:
+            </p>
+            <ol className="list-decimal pl-5 space-y-2 text-sm">
+              <li>
+                <strong>Fill in Details:</strong> Enter your billing details (sender) and your client's information (recipient).
+              </li>
+              <li>
+                <strong>Add Line Items:</strong> Input the products or services rendered, quantities, unit prices, and select the appropriate VAT/Moms percentage. Totals are calculated dynamically.
+              </li>
+              <li>
+                <strong>PDF Generation:</strong> Click the <em>"Print / Download PDF"</em> button. This opens your browser's native print preview panel. Set the print destination to <strong>"Save as PDF"</strong>. The print stylesheet automatically hides the edit forms, application menus, and sidebar, outputting a clean A4 PDF document.
+              </li>
+            </ol>
+          </section>
+
+          <section className="space-y-4">
+            <h3 className="text-lg font-bold text-foreground">Accuracy Verification & Legal Compliance Disclaimers</h3>
+            <p className="text-sm leading-relaxed">
+              To avoid payment delays and ensure bookkeeping accuracy, always review the generated PDF preview for typos, missing references, or mathematical discrepancies before sending it to clients.
+            </p>
+            <p className="text-sm leading-relaxed">
+              <strong>Limitation of Liability:</strong> While this free invoice generator provides structures commonly required for corporate invoicing and Swedish tax registries (such as F-skattsedel registration and Moms percentages), tax requirements vary widely depending on your local jurisdiction, corporate structure, and client location. This tool is provided as-is and does not guarantee legal or tax compliance for every international market. We recommend verifying specific invoicing rules with a certified public accountant or legal professional.
+            </p>
+          </section>
+
+          <section className="space-y-4">
+            <h3 className="text-lg font-bold text-foreground">Privacy-First Architecture & Accessibility</h3>
+            <p className="text-sm leading-relaxed">
+              Our tool is built to follow the highest standards of accessibility (WCAG 2.2 AA compliant) and speed. Because all calculations, line-item tabulations, and image uploads occur 100% locally inside your web browser, none of your sensitive financial, business, or client data is ever transmitted to external servers. This makes it a highly secure, private option for freelancers and businesses.
             </p>
           </section>
         </article>

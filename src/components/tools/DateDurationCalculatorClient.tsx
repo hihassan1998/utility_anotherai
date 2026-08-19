@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { DatePickerWithInput } from "@/components/DatePickerWithInput";
 
 export function DateDurationCalculatorClient() {
   const [startDate, setStartDate] = React.useState("");
@@ -28,6 +29,10 @@ export function DateDurationCalculatorClient() {
 
     let start = new Date(startDate);
     let end = new Date(endDate);
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      alert("Please enter valid start and end dates!");
+      return;
+    }
 
     // Swap if start is after end
     const isSwapped = start > end;
@@ -98,26 +103,22 @@ export function DateDurationCalculatorClient() {
             <Label htmlFor="start-date" className="text-xs font-semibold">
               Start Date
             </Label>
-            <Input
+            <DatePickerWithInput
               id="start-date"
-              type="date"
               required
               value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="bg-muted/30 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              onChange={setStartDate}
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="end-date" className="text-xs font-semibold">
               End Date
             </Label>
-            <Input
+            <DatePickerWithInput
               id="end-date"
-              type="date"
               required
               value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="bg-muted/30 border-muted-foreground/15 rounded-lg focus-visible:ring-emerald-500"
+              onChange={setEndDate}
             />
           </div>
         </div>

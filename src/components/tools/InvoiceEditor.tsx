@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@/components/Icon";
+import { DatePickerWithInput } from "@/components/DatePickerWithInput";
 
 interface LineItem {
   id: string;
@@ -346,32 +347,26 @@ export function InvoiceEditor({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="space-y-1.5">
             <Label htmlFor="invoice-issue" className="text-xs font-semibold">Issue Date</Label>
-            <input
+            <DatePickerWithInput
               id="invoice-issue"
-              type="date"
               value={issueDate}
-              onChange={(e) => setIssueDate(e.target.value)}
-              className={inputMutedStyle}
+              onChange={setIssueDate}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="invoice-delivery" className="text-xs font-semibold">Delivery Date</Label>
-            <input
+            <DatePickerWithInput
               id="invoice-delivery"
-              type="date"
               value={deliveryDate}
-              onChange={(e) => setDeliveryDate(e.target.value)}
-              className={inputMutedStyle}
+              onChange={setDeliveryDate}
             />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="invoice-due" className="text-xs font-semibold">Due Date</Label>
-            <input
+            <DatePickerWithInput
               id="invoice-due"
-              type="date"
               value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className={inputMutedStyle}
+              onChange={setDueDate}
             />
           </div>
         </div>
