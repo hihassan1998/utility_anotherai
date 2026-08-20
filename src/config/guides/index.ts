@@ -7,6 +7,7 @@ import { wordCounterGuide } from "./word-counter";
 import { characterCounterGuide } from "./character-counter";
 import { freeInvoiceGeneratorGuide } from "./free-invoice-generator";
 import { daysUntilCalculatorGuide } from "./days-until-calculator";
+import { convertPhotoToPdfGuide } from "./convert-photo-to-pdf";
 
 export interface GuideArticle {
   toolId: string;
@@ -38,4 +39,5 @@ export const guides: Record<string, GuideArticle> = {
   "character-counter": characterCounterGuide,
   "free-invoice-generator": freeInvoiceGeneratorGuide,
   "days-until-calculator": daysUntilCalculatorGuide,
+  "convert-photo-to-pdf": convertPhotoToPdfGuide,
 };

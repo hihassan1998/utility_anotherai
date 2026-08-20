@@ -19,6 +19,7 @@ Calculations, conversions, and inputs run 100% locally in the browser, ensuring 
 *   **Percentage Calculator**: Instantly calculate equations, discount percentages, and value increase/decrease metrics.
 *   **Unit Converter**: Multi-category conversion supporting Length, Weight, Temperature, Area, Volume, Speed, and Time units.
 *   **Days Until Calculator**: Calculate the remaining days, hours, and minutes to custom events, holidays, or milestones with our free, privacy-first countdown tool.
+*   **Convert Photo to PDF**: Convert photos and images (JPG, PNG, WebP, GIF, SVG, BMP, AVIF, TIFF, ICO) to PDF format online for free. Adjust margins, layouts, orientation, and download instantly.
 *   **Built-in SEO & FAQ Systems**: Implements JSON-LD breadcrumb and FAQ page schema tags on every route to trigger Google rich snippets automatically.
 *   **No-Marketing Growth Loops**: Easy share-to-clipboard buttons on results containers generating custom status text for referral loops.
 

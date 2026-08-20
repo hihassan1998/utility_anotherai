@@ -243,6 +243,34 @@ export const siteConfig = {
           answer: "Yes. Once you configure a custom event title and target date, you can click the copy share button to copy the countdown summary text to your clipboard."
         }
       ]
+    },
+    {
+      id: "convert-photo-to-pdf",
+      name: "Convert Photo to PDF",
+      href: "/convert-photo-to-pdf",
+      iconName: "FileImage",
+      description: "Convert photos and images to PDF format online for free. Adjust margins, page orientation, layout sizes, and download instantly.",
+      longDescription: "Our free online Convert Photo to PDF tool allows you to convert multiple images (JPG, PNG, WebP, GIF, SVG, BMP, AVIF, TIFF, ICO) into a single PDF document in seconds. Reorder images, customize page size (A4, Letter, Fit), layout orientation (Portrait, Landscape, Auto), and margins to generate clean PDF files. All processing happens locally in your browser, ensuring 100% data privacy with no backend uploads.",
+      keywords: ["Convert Photo to PDF", "Image to PDF Converter", "JPG to PDF Online", "PNG to PDF Free", "Photos to PDF Converter"],
+      examples: [
+        "Convert multiple JPG/PNG images into a single formatted PDF document.",
+        "Combine family photos or receipts into a clean, paginated PDF file.",
+        "Adjust output page sizes (like A4 or US Letter) and margins for print layouts."
+      ],
+      faqs: [
+        {
+          question: "How does the Image to PDF converter work?",
+          answer: "The tool loads your images directly in your browser. Using JavaScript, it measures the image dimensions, places them onto PDF pages according to your selected margins, orientation, and layout sizes, and generates a downloadable PDF file. No images are sent to any external server."
+        },
+        {
+          question: "Which image formats are supported?",
+          answer: "We support all standard browser-compatible image formats including JPEG (.jpg, .jpeg), PNG, WebP, GIF, SVG, BMP, AVIF, TIFF, and ICO."
+        },
+        {
+          question: "Is there a file limit or upload count constraint?",
+          answer: "Since the tool runs entirely client-side using your browser's memory, there are no artificial upload limits. However, processing exceptionally large batches of high-resolution images may depend on your device's available memory. If you require advanced batch processing, page compression, or complex PDF merges, we recommend using dedicated services like [iLovePDF](https://www.ilovepdf.com/)."
+        }
+      ]
     }
   ] as Tool[]
 };

@@ -310,13 +310,20 @@ export function ToolLayout({ toolId, children }: ToolLayoutProps) {
                   </ul>
                 </div>
 
-                {/* Category 4: Converters & Metrics */}
+                {/* Category 4: Converters & PDF Utilities */}
                 <div className="space-y-3">
                   <h3 className="text-sm font-bold text-foreground flex items-center gap-2 pb-1.5 border-b border-border/20">
                     <Icon name="Activity" size={16} className="text-emerald-500" />
-                    Converters & Body Metrics
+                    Converters & PDF Utilities
                   </h3>
                   <ul className="space-y-3">
+                    <li>
+                      {renderDirectoryLink(
+                        "/convert-photo-to-pdf",
+                        "Convert Photo to PDF",
+                        "Convert and merge multiple images into a single PDF document."
+                      )}
+                    </li>
                     <li>
                       {renderDirectoryLink(
                         "/unit-converter",

@@ -363,6 +363,28 @@ URL:
 - [ ] Sitemap inclusion verified
 - [ ] Production deployment verified
 
+## Convert Photo to PDF
+
+URL:
+
+/convert-photo-to-pdf
+
+- [ ] Tool implemented
+- [ ] Calculation/function tested
+- [ ] Edge cases tested
+- [ ] Mobile tested
+- [ ] Accessibility checked
+- [ ] Unique title
+- [ ] Unique meta description
+- [ ] H1 exists
+- [ ] Explanation content
+- [ ] Examples
+- [ ] FAQs
+- [ ] Related tools
+- [ ] Internal links
+- [ ] Sitemap inclusion verified
+- [ ] Production deployment verified
+
 ---
 
 # 4. Third-Party Integrations & Monetization
